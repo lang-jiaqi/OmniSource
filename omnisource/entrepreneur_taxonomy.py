@@ -19,7 +19,7 @@ class EntrepreneurClassification:
 
     # Website-facing bucket.  The website keeps these four concise filters.
     event_type: str
-    # Report-facing leaf path, matching tracks/venture/entrepreneur.yaml.
+    # Report-facing bucket, matching the four website filters.
     topic: str
 
 
@@ -34,7 +34,7 @@ class _Rule:
 _RULES: tuple[_Rule, ...] = (
     _Rule(
         "融资",
-        "资本与公司 > 并购与公司动作",
+        "融资",
         (
             "acquisition", "acqui-hire", "acquire", "acquires", "acquired",
             "merger", "buyout", "并购", "收购", "合并",
@@ -43,7 +43,7 @@ _RULES: tuple[_Rule, ...] = (
     ),
     _Rule(
         "融资",
-        "资本与公司 > 融资与投资",
+        "融资",
         (
             "funding", "fundraise", "fundraising", "raise", "raised", "raises",
             "series a", "series b", "series c", "seed round", "venture capital",
@@ -53,7 +53,7 @@ _RULES: tuple[_Rule, ...] = (
     ),
     _Rule(
         "产品",
-        "产品与市场 > 产品发布与定价",
+        "产品",
         (
             "launch", "launched", "release", "released", "pricing", "product",
             "platform", "api", "model", "ships", "general availability", "rollout",
@@ -63,7 +63,7 @@ _RULES: tuple[_Rule, ...] = (
     ),
     _Rule(
         "团队",
-        "团队与招聘 > 创业团队与联合创始人",
+        "团队",
         (
             "founder", "cofounder", "co-founder", "联合创始人", "创始人",
         ),
@@ -71,7 +71,7 @@ _RULES: tuple[_Rule, ...] = (
     ),
     _Rule(
         "团队",
-        "团队与招聘 > 招聘与组织变化",
+        "团队",
         (
             "hiring", "hire", "recruit", "joined", "joins", "appointed", "executive",
             "leadership", "team", "organization", "talent", "layoff", "招聘", "团队",
@@ -81,7 +81,7 @@ _RULES: tuple[_Rule, ...] = (
     ),
     _Rule(
         "市场",
-        "产品与市场 > 企业采用与开发者生态",
+        "市场",
         (
             "customer", "customers", "adoption", "partnership", "partnered", "enterprise",
             "contract", "revenue", "sales", "expansion", "demand", "market", "competition",
@@ -95,7 +95,7 @@ _RULES: tuple[_Rule, ...] = (
 
 _DEFAULT = EntrepreneurClassification(
     event_type="市场",
-    topic="产品与市场 > 企业采用与开发者生态",
+    topic="市场",
 )
 
 

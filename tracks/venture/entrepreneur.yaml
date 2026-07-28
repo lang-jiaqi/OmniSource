@@ -174,29 +174,16 @@ relevance_filter:
       - Hugging Face
 
 topics:
-  - name: 资本与公司
-    children:
-      - 融资与投资
-      - 并购与公司动作
-  - name: 产品与市场
-    children:
-      - 产品发布与定价
-      - 企业采用与开发者生态
-  - name: 团队与招聘
-    children:
-      - 创业团队与联合创始人
-      - 招聘与组织变化
+  - 融资
+  - 产品
+  - 团队
+  - 市场
 
 topic_translations:
-  资本与公司: Capital and Companies
-  融资与投资: Funding and Investment
-  并购与公司动作: M&A and Company Moves
-  产品与市场: Products and Market
-  产品发布与定价: Product Launches and Pricing
-  企业采用与开发者生态: Enterprise Adoption and Developer Ecosystem
-  团队与招聘: Startup Teams and Hiring
-  创业团队与联合创始人: Startup Teams and Co-founders
-  招聘与组织变化: Hiring and Organization
+  融资: Capital
+  产品: Product
+  团队: People
+  市场: Market
 
 llm:
   provider: openai_compatible

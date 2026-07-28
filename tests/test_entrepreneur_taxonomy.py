@@ -15,37 +15,37 @@ class EntrepreneurTaxonomyTests(unittest.TestCase):
                 "AI startup raises a Series A",
                 "The company will expand its product.",
                 "融资",
-                "资本与公司 > 融资与投资",
+                "融资",
             ),
             (
                 "AI company announces acquisition",
                 "The acquisition follows a funding round.",
                 "融资",
-                "资本与公司 > 并购与公司动作",
+                "融资",
             ),
             (
                 "AI startup launches a developer API",
                 "The product is available today.",
                 "产品",
-                "产品与市场 > 产品发布与定价",
+                "产品",
             ),
             (
                 "AI startup founders join forces",
                 "The founder team is building a new company.",
                 "团队",
-                "团队与招聘 > 创业团队与联合创始人",
+                "团队",
             ),
             (
                 "AI company announces hiring plans",
                 "The team is recruiting engineers.",
                 "团队",
-                "团队与招聘 > 招聘与组织变化",
+                "团队",
             ),
             (
                 "Enterprise customer adopts an AI platform",
                 "The partnership expands deployment.",
                 "市场",
-                "产品与市场 > 企业采用与开发者生态",
+                "市场",
             ),
         )
         for title, summary, event_type, topic in cases:
@@ -69,21 +69,17 @@ class EntrepreneurTaxonomyTests(unittest.TestCase):
             {
                 "name": "entrepreneur",
                 "sources": ["rss"],
-                "topics": [
-                    {"name": "资本与公司", "children": ["融资与投资", "并购与公司动作"]},
-                    {"name": "产品与市场", "children": ["产品发布与定价", "企业采用与开发者生态"]},
-                    {"name": "团队与招聘", "children": ["创业团队与联合创始人", "招聘与组织变化"]},
-                ],
+                "topics": ["融资", "产品", "团队", "市场"],
                 "output": {"language": "中文"},
             },
             "2026-07-29",
             "Daily",
         )
 
-        self.assertEqual(signal.topic, "产品与市场 > 产品发布与定价")
+        self.assertEqual(signal.topic, "产品")
         self.assertEqual(
             context["sections"][0]["groups"][0]["topic"],
-            "产品与市场 > 产品发布与定价",
+            "产品",
         )
 
 
