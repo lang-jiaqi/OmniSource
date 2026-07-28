@@ -395,7 +395,7 @@ Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, w
 
 *Corresponding author: Jiaqi Lang · National University of Singapore (NUS) · lang.jiaqi@u.nus.edu*
 
-## 🌍 世界模型方向创业探索
+## 对世界模型感兴趣？
 
 本项目作者也在独立探索世界模型方向的创业机会。
 
