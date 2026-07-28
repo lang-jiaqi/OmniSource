@@ -401,6 +401,6 @@ Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, w
 
 - **Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), [email](mailto:wangbo.zhao96@gmail.com))  正在筹备一个专注于世界模型及其基础设施建设的早期创业项目，目前正在进行种子轮融资。欢迎对该方向感兴趣的投资者和战略合作伙伴联系交流。
 
-- **Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) 是一家独立创业公司的创始人，该公司专注于世界模型与智能体游戏开发。公司致力于构建具备通用智能能力的系统，使其能够理解、预测，并最终与人类环境和真实世界进行交互。更多信息请访问：[company website](https://your-company-website.com)。
+- **Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) 是一家独立创业公司的创始人，该公司专注于世界模型与智能体游戏开发。公司致力于构建具备通用智能能力的系统，使其能够理解、预测，并最终与人类环境和真实世界进行交互。更多信息请访问：[company website](https://www.cardinal-agi.com)。
 
 上述创业项目均独立于本项目，且彼此之间不存在关联。
