@@ -25,7 +25,3 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["omnisource"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"omnisource/taxonomies" = "omnisource/taxonomies"
-"omnisource/expert_skills" = "omnisource/expert_skills"
