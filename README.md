@@ -211,18 +211,34 @@ Common options include keywords and exclusion terms, arXiv categories, RSS URLs,
 
 After configuring the track, add it to `active_tracks` and return to Step 3 to run Actions. It affects only your fork and does not change the official website.
 
-### Step 5 · 📡 Configure additional sources
+### Step 5 · 📡 Choose your sources
 
-Enable a source in the track's `sources` list, then fill in its matching configuration block. It is best to start with public sources: arXiv, Hugging Face, RSS, GitHub, and Hacker News need no login, API key, OpenCLI, or Browser Bridge.
+Sources are enabled in the track's top-level `sources:` list. The easiest first
+run uses public sources only. They need no extra account, token, Chrome, or
+OpenCLI.
 
-RSS configuration example:
+Open the track file you copied in Step 4 and replace its entire `sources:` block
+with this:
 
 ```yaml
 sources:
   - arxiv
+  - hf_papers
   - rss
   - github
+  - hackernews
+```
 
+Keep the track's existing `categories`, `keywords`, `llm`, and `output` sections.
+The `arxiv` source needs `categories`; the example tracks already contain them.
+`hf_papers` and `hackernews` work without a separate configuration block.
+
+#### RSS feeds
+
+RSS settings go at the top level of the same track file. Do not put them under
+an `rss:` heading. Replace the existing RSS block, or add this block once:
+
+```yaml
 rss_feeds:
   - https://huggingface.co/blog/feed.xml
   - https://blog.research.google/feeds/posts/default
@@ -230,34 +246,74 @@ rss_feeds:
 rss_days: 21
 ```
 
-**Twitter / X: use Apify in GitHub Actions**
-
-Add `APIFY_TOKEN` under **Settings → Secrets and variables → Actions** in your fork, then configure:
+Optional public sources can be enabled by adding `blogrxiv` to the same list:
 
 ```yaml
 sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - hackernews
+  - blogrxiv
+```
+
+Optional tuning fields:
+
+```yaml
+hf_limit: 100
+hn_query: "AI agent OR foundation model"
+hn_top: 50
+blogrxiv_days: 1
+github_query: "AI agent OR foundation model"
+```
+
+#### Twitter / X in GitHub Actions
+
+Use Apify for X in GitHub Actions. In your fork, open **Settings → Secrets and
+variables → Actions → New repository secret** and add:
+
+```text
+Name: APIFY_TOKEN
+Secret: paste your Apify token here
+```
+
+Never put the token in YAML or commit it to GitHub. Then replace the track's
+source list with the following version, or add only the `twitter` line to your
+existing list:
+
+```yaml
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - hackernews
   - twitter
 
 twitter:
   mode: apify
-  queries: ["AI agent", "LLM tool"]
-  handles: [OpenAI, AnthropicAI]
+  queries:
+    - "AI agent"
+    - "LLM tool"
+  handles:
+    - OpenAI
+    - AnthropicAI
   max_results: 50
 ```
 
-Apify usually offers a free quota and may charge after it is exceeded; it does not need Chrome, Browser Bridge, or OpenCLI. See [Twitter/X configuration](docs/twitter-setup.md) for all fields. If you only want to reuse a logged-in Chrome session locally, you can use OpenCLI, but that is not the recommended path for GitHub Actions.
+Apify does not require Chrome, Browser Bridge, or OpenCLI. It may charge after
+its free quota is used. See [Twitter/X configuration](docs/twitter-setup.md) for
+the OpenCLI and local alternatives.
 
-**Xiaohongshu / Zhihu: local OpenCLI only**
+#### Xiaohongshu / Zhihu: local computer only
 
-These two sources require installing [OpenCLI](https://github.com/jackwener/OpenCLI) and Browser Bridge, and logging into the corresponding sites in Chrome; ordinary GitHub Actions runners cannot access your browser. First copy the example:
+These sources use a logged-in Chrome session through [OpenCLI](https://github.com/jackwener/OpenCLI).
+They do not run on an ordinary GitHub Actions runner. Skip this section if you
+only want scheduled GitHub Issues.
 
-**macOS / Linux**
-
-```bash
-cp examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-```
-
-Check OpenCLI first:
+Install OpenCLI and Browser Bridge, log in to both sites in Chrome, and check
+the connection:
 
 ```bash
 opencli doctor
@@ -266,43 +322,68 @@ opencli zhihu user-articles USER_NAME --limit 3 -f json
 opencli zhihu user-answers USER_NAME --limit 3 -f json
 ```
 
-If macOS reports `Unable to find application named 'OpenCLIApp'`, it does not mean the account is not logged in; the `opencli` launcher failed to start the background program. Use the runtime bundled inside the app:
+For a local track, add the source names and replace the placeholders:
 
-```bash
-env -u OPENCLI_DAEMON_PORT \
-  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node \
-  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js \
-  doctor
+```yaml
+sources:
+  - xiaohongshu
+  - zhihu
+
+xiaohongshu:
+  enabled: true
+  command: opencli
+  timezone: Asia/Shanghai
+  days: 1
+  max_notes_per_creator: 20
+  creators:
+    - name: "Creator name"
+      user_id: "USER_ID"
+
+zhihu:
+  enabled: true
+  command: opencli
+  timezone: Asia/Shanghai
+  days: 7
+  max_items_per_creator: 20
+  creators:
+    - name: "Zhihu user"
+      user: "USER_NAME"
+      articles: true
+      answers: true
 ```
 
-After it succeeds, tell OmniSource to use this command in the same terminal:
+Then run the track locally:
 
 ```bash
-export OPENCLI_COMMAND='env -u OPENCLI_DAEMON_PORT /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js'
 uv run omnisource run --track builder/my-social-radar
 ```
 
-**Windows PowerShell**
+On Windows, use the same `opencli` commands in PowerShell. If macOS says
+`Unable to find application named 'OpenCLIApp'`, follow the bundled-runtime
+steps in [Xiaohongshu setup](docs/xiaohongshu-setup.md). For the full Zhihu
+field reference, see the [customization guide](docs/customizing-your-radar.md).
 
-```powershell
-Copy-Item examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-opencli doctor
-opencli xiaohongshu user USER_ID --limit 3 -f json
-opencli zhihu user-articles USER_NAME --limit 3 -f json
-opencli zhihu user-answers USER_NAME --limit 3 -f json
+#### Reddit
+
+Reddit has two modes. For a local Chrome session, use `mode: opencli`. For
+GitHub Actions, create a Reddit application, add the `REDDIT_CLIENT_ID` and
+`REDDIT_CLIENT_SECRET` repository secrets, and add this configuration:
+
+```yaml
+sources:
+  - reddit
+
+reddit:
+  mode: oauth
+  max_results: 50
+
+reddit_subreddits:
+  - MachineLearning
+  - LocalLLaMA
 ```
 
-Do not copy the macOS path above on Windows. If `opencli doctor` shows `Daemon: running` and `Extension: connected`, use `opencli` directly.
-
-In short: the green Browser Bridge indicator only means the browser extension is ready; OmniSource also needs the OpenCLI background daemon. The macOS `opencli` launcher sometimes fails to start the daemon, which is why the app-bundled runtime above is needed. Logging into Xiaohongshu or Zhihu is not the cause of that error.
-
-Replace the example creator names and `USER_ID` with real values, then complete the Zhihu fields using [Xiaohongshu configuration](docs/xiaohongshu-setup.md) and [customization guide](docs/customizing-your-radar.md). Public sources and Apify do not require installing OpenCLI.
-
-Note: OpenCLI 1.8.5 occasionally reports `Navigation rejected` when running Zhihu `user-articles` directly. This is not a login failure; OmniSource catches the error and falls back to reading the content through the browser session. To verify OmniSource's own Zhihu source, run this command in a terminal where `OPENCLI_COMMAND` is set:
-
-```bash
-uv run python -c 'from omnisource.sources.zhihu import ZhihuSource; rows=ZhihuSource().fetch({"days":30,"zhihu":{"creators":[{"user":"USER_NAME","articles":True,"answers":True}]}}); print(f"zhihu_signals={len(rows)}"); [print(x.title) for x in rows]'
-```
+For the local OpenCLI configuration and Reddit application details, see
+[Reddit setup](docs/reddit-setup.md).
 
 ### Step 6 · 🧪 Optional: validate locally
 
@@ -322,7 +403,7 @@ uv sync
 uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
 ```
 
-If a Markdown file appears in `reports/`, the basic configuration is working. To generate official GitHub Issues, run the corresponding workflow in **Actions**; model reports use the keys configured in Step 2, while X additionally uses `APIFY_TOKEN`.
+If a Markdown file appears in `reports/`, the basic configuration is working. To generate official GitHub Issues, run the corresponding workflow in **Actions**; model reports use the keys configured in Step 2, while X in `apify` mode additionally uses `APIFY_TOKEN`.
 
 The open-source version only handles GitHub Issue reports for your fork; it does not handle the official site's daily reports, weekly reports, or email subscriptions. Each track records what has already been published: daily reports do not repeat earlier daily items, and weekly reports do not repeat earlier weekly items. `--no-memory` is for debugging only and temporarily disables this protection.
 

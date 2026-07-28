@@ -213,18 +213,30 @@ active_tracks:
 
 配置完成后，把新 track 加入 `active_tracks`，再回到 Step 3 运行 Actions。它只会影响你自己的 Fork，不会改变官方网站。
 
-### Step 5 · 📡 配置额外信息源
+### Step 5 · 📡 选择信息源
 
-在 track 的 `sources` 中打开来源，再填写对应配置块。建议先从公开来源开始：arXiv、Hugging Face、RSS、GitHub 和 Hacker News 都不需要登录、API key、OpenCLI 或 Browser Bridge。
+信息源统一写在 track 顶层的 `sources:` 列表里。第一次使用建议只用公开来源：
+不需要额外账号、Token、Chrome 或 OpenCLI。
 
-RSS 的配置示例：
+打开 Step 4 中复制出来的 track 文件，把原来的整个 `sources:` 块替换成：
 
 ```yaml
 sources:
   - arxiv
+  - hf_papers
   - rss
   - github
+  - hackernews
+```
 
+保留原文件里的 `categories`、`keywords`、`llm` 和 `output`。其中 `arxiv` 需要
+`categories`；已有示例都已经写好。`hf_papers` 和 `hackernews` 不需要单独的配置块。
+
+#### RSS 信息源
+
+RSS 配置写在同一个 track 文件的顶层，不要放在 `rss:` 下面。把已有 RSS 配置替换为：
+
+```yaml
 rss_feeds:
   - https://huggingface.co/blog/feed.xml
   - https://blog.research.google/feeds/posts/default
@@ -232,34 +244,69 @@ rss_feeds:
 rss_days: 21
 ```
 
-**Twitter / X：用 Apify 跑 GitHub Actions**
-
-在 Fork 仓库的 **Settings → Secrets and variables → Actions** 添加 `APIFY_TOKEN`，然后写入：
+其他公开来源也不需要 Token。需要时，把名称加入上面的 `sources:`：
 
 ```yaml
 sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - hackernews
+  - blogrxiv
+```
+
+可选调整项：
+
+```yaml
+hf_limit: 100
+hn_query: "AI agent OR foundation model"
+hn_top: 50
+blogrxiv_days: 1
+github_query: "AI agent OR foundation model"
+```
+
+#### Twitter / X：在 GitHub Actions 中使用
+
+在 Fork 仓库中打开 **Settings → Secrets and variables → Actions → New repository secret**，添加：
+
+```text
+Name: APIFY_TOKEN
+Secret: 在这里粘贴 Apify Token
+```
+
+不要把 Token 写进 YAML，也不要提交到 GitHub。然后把 track 的来源列表替换为下面这个版本，
+或者只把 `twitter` 这一行加入你现有的列表：
+
+```yaml
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - hackernews
   - twitter
 
 twitter:
   mode: apify
-  queries: ["AI agent", "LLM tool"]
-  handles: [OpenAI, AnthropicAI]
+  queries:
+    - "AI agent"
+    - "LLM tool"
+  handles:
+    - OpenAI
+    - AnthropicAI
   max_results: 50
 ```
 
-Apify 通常有免费额度，超出后可能收费；它不需要 Chrome、Browser Bridge 或 OpenCLI。完整字段见 [Twitter/X 配置](docs/twitter-setup.md)。如果只在本地复用 Chrome 登录状态，也可以使用 OpenCLI，但这不是 GitHub Actions 的推荐路径。
+Apify 不需要 Chrome、Browser Bridge 或 OpenCLI；免费额度用完后可能收费。完整字段见
+[Twitter/X 配置](docs/twitter-setup.md)。
 
-**小红书 / 知乎：仅适合本地 OpenCLI**
+#### 小红书 / 知乎：仅在本地电脑运行
 
-这两个来源需要安装 [OpenCLI](https://github.com/jackwener/OpenCLI) 和 Browser Bridge，并在 Chrome 登录对应网站；普通 GitHub Actions runner 访问不到你的浏览器。先复制示例：
+这两个来源通过 [OpenCLI](https://github.com/jackwener/OpenCLI) 使用 Chrome 中已经登录的账号，
+普通 GitHub Actions runner 无法访问你的浏览器。如果只想让 GitHub Actions 自动发 Issue，跳过本节。
 
-**macOS / Linux**
-
-```bash
-cp examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-```
-
-先检查 OpenCLI：
+安装 OpenCLI 和 Browser Bridge，在 Chrome 登录对应网站，然后检查连接：
 
 ```bash
 opencli doctor
@@ -268,50 +315,66 @@ opencli zhihu user-articles USER_NAME --limit 3 -f json
 opencli zhihu user-answers USER_NAME --limit 3 -f json
 ```
 
-如果 macOS 出现 `Unable to find application named 'OpenCLIApp'`，不是账号没登录，而是
-系统里的 `opencli` 启动器没有成功拉起后台程序。直接使用 App 内置 runtime：
+本地 track 加入下面的来源，并把占位符替换成真实信息：
 
-```bash
-env -u OPENCLI_DAEMON_PORT \
-  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node \
-  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js \
-  doctor
+```yaml
+sources:
+  - xiaohongshu
+  - zhihu
+
+xiaohongshu:
+  enabled: true
+  command: opencli
+  timezone: Asia/Shanghai
+  days: 1
+  max_notes_per_creator: 20
+  creators:
+    - name: "博主名称"
+      user_id: "USER_ID"
+
+zhihu:
+  enabled: true
+  command: opencli
+  timezone: Asia/Shanghai
+  days: 7
+  max_items_per_creator: 20
+  creators:
+    - name: "知乎用户"
+      user: "USER_NAME"
+      articles: true
+      answers: true
 ```
 
-验证成功后，在同一个终端告诉 OmniSource 使用这个命令：
+然后在本地运行：
 
 ```bash
-export OPENCLI_COMMAND='env -u OPENCLI_DAEMON_PORT /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js'
 uv run omnisource run --track builder/my-social-radar
 ```
 
-**Windows PowerShell**
+Windows PowerShell 也使用相同的 `opencli` 命令。如果 macOS 出现
+`Unable to find application named 'OpenCLIApp'`，按 [小红书配置](docs/xiaohongshu-setup.md) 中的
+内置 runtime 步骤操作；知乎字段说明见[自定义配置说明](docs/customizing-your-radar.md)。
 
-```powershell
-Copy-Item examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-opencli doctor
-opencli xiaohongshu user USER_ID --limit 3 -f json
-opencli zhihu user-articles USER_NAME --limit 3 -f json
-opencli zhihu user-answers USER_NAME --limit 3 -f json
+#### Reddit
+
+Reddit 有两种模式：本地 Chrome 使用 `mode: opencli`；GitHub Actions 使用 `mode: oauth`，
+需要先创建 Reddit application，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET` 两个
+Secret，并加入下面的配置：
+
+```yaml
+sources:
+  - reddit
+
+reddit:
+  mode: oauth
+  max_results: 50
+
+reddit_subreddits:
+  - MachineLearning
+  - LocalLLaMA
 ```
 
-Windows 不要复制上面的 macOS 路径。Windows 如果 `opencli doctor` 能显示
-`Daemon: running` 和 `Extension: connected`，直接使用 `opencli` 即可。
-
-简单来说：绿色的 Browser Bridge 只代表浏览器扩展已准备好；OmniSource 还需要
-OpenCLI 的后台 daemon。macOS 的 `opencli` 启动器有时拉不起 daemon，才需要上面的
-App 内置 runtime。登录小红书和知乎本身不是这次报错的原因。
-
-把示例中的作者名称和 `USER_ID` 替换成真实信息，再按 [小红书配置](docs/xiaohongshu-setup.md) 和 [自定义配置说明](docs/customizing-your-radar.md) 补充知乎字段。公开来源和 Apify 不需要安装 OpenCLI。
-
-提示：OpenCLI 1.8.5 直接运行知乎 `user-articles` 时，偶尔会出现
-`Navigation rejected`。这不是登录失败；OmniSource 会捕获这个错误，并使用浏览器会话
-fallback 读取知乎内容。要验证 OmniSource 自己的知乎 source，请在已设置
-`OPENCLI_COMMAND` 的终端运行：
-
-```bash
-uv run python -c 'from omnisource.sources.zhihu import ZhihuSource; rows=ZhihuSource().fetch({"days":30,"zhihu":{"creators":[{"user":"USER_NAME","articles":True,"answers":True}]}}); print(f"zhihu_signals={len(rows)}"); [print(x.title) for x in rows]'
-```
+本地 OpenCLI 配置和 Reddit application 的详细步骤见 [Reddit 配置](docs/reddit-setup.md)。
 
 ### Step 6 · 🧪 可选：本地验证
 
@@ -331,7 +394,7 @@ uv sync
 uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
 ```
 
-如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 Step 2 配置的密钥，X 则额外使用 `APIFY_TOKEN`。
+如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 Step 2 配置的密钥，X 使用 `apify` 模式时才需要额外配置 `APIFY_TOKEN`。
 
 开源版本只负责你 Fork 后的 GitHub Issue 报告，不负责官网日报、周报或邮箱订阅。每个 track 会记录已经发布的内容：日报不会重复之前的日报，周报也不会重复之前的周报；`--no-memory` 仅用于调试，会暂时关闭这项保护。
 
