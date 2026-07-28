@@ -198,7 +198,9 @@ topic_translations:
   创业团队与联合创始人: Startup Teams and Co-founders
   招聘与组织变化: Hiring and Organization
 
-llm: {}
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
 review_distill: false
 enrich_openalex: false
 graphs: false

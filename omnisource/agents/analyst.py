@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from .. import i18n
+from ..entrepreneur_taxonomy import classify_entrepreneur_signal, is_entrepreneur_track
 from ..llm.base import LLMProvider
 from ..models import Signal
 from ..prompt_feedback import feedback_prompt_clause
@@ -153,7 +154,11 @@ class Analyst:
         primary = _localized_for(signal, lang)
         signal.why_it_matters = primary.get("why_it_matters") or data.get("why_it_matters")
         signal.read_priority = data.get("read_priority")
-        if topic_leaves:
+        if is_entrepreneur_track(track):
+            # The startup taxonomy is deliberately deterministic so it stays
+            # available when the entrepreneur track has no LLM configured.
+            signal.topic = classify_entrepreneur_signal(signal).topic
+        elif topic_leaves:
             # Map the LLM's answer back onto the taxonomy; fall back to "other".
             signal.topic = match_topic(data.get("topic"), topic_leaves) or OTHER_TOPIC
         return True

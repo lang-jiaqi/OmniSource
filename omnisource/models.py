@@ -26,7 +26,7 @@ class Signal:
     keyword_hits: int = 0  # filled in by ranking, not by sources
     quality_score: float | None = None  # filled in by the quality distill step
 
-    # Filled in by the Analyst (LLM) step; None until then.
+    # Filled in by the Analyst (LLM) step or a track's deterministic taxonomy.
     llm_relevance: float | None = None  # semantic relevance to the track, 0..1
     novelty: float | None = None  # how novel vs incremental, 0..1
     topic: str | None = None  # taxonomy leaf path within the track, e.g. "A > B > C"

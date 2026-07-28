@@ -140,8 +140,8 @@ topic_translations:
   研究检索: Research and Discovery
 
 llm:
-  provider: openai
-  model: gpt-4.1-mini
+  provider: openai_compatible
+  model: gpt-5.6-luna
 
 ranking:
   relevance: 0.4

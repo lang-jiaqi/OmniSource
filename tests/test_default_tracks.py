@@ -84,20 +84,20 @@ class DefaultTrackTests(unittest.TestCase):
         self.assertIn("blog", infra["quality_distill"]["fill_quota_types"])
         self.assertGreaterEqual(infra["rss_days"], 45)
 
-    def test_active_ai_tracks_use_the_shared_compatible_gateway(self) -> None:
+    def test_builtin_tracks_use_the_shared_compatible_gateway(self) -> None:
         with (Path(__file__).resolve().parents[1] / "omnisource.yaml").open(encoding="utf-8") as handle:
             app = yaml.safe_load(handle)
-        for name in app["active_tracks"]:
+        for name in track_references():
             track = self._load_track(name)
-            if name.endswith("/entrepreneur"):
-                self.assertFalse(track.get("llm"))
-                self.assertIn("rss", track["sources"])
-                self.assertIn("hackernews", track["sources"])
-                self.assertEqual(track["output"]["top_blogs"], 40)
-                self.assertNotIn("github", track["sources"])
-                continue
             self.assertEqual(track["llm"]["provider"], "openai_compatible", name)
             self.assertEqual(track["llm"]["model"], "gpt-5.6-luna", name)
+
+        entrepreneur = self._load_track("venture/entrepreneur")
+        self.assertIn("venture/entrepreneur", app["active_tracks"])
+        self.assertIn("rss", entrepreneur["sources"])
+        self.assertIn("hackernews", entrepreneur["sources"])
+        self.assertEqual(entrepreneur["output"]["top_blogs"], 40)
+        self.assertNotIn("github", entrepreneur["sources"])
 
     def test_ai_infra_keeps_ci_safe_twitter_configuration(self) -> None:
         track = self._load_track("builder/ai-infra")

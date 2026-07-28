@@ -11,6 +11,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 from .. import i18n
+from ..entrepreneur_taxonomy import assign_entrepreneur_topics
 from ..models import Signal
 from ..source_evidence import source_signal_markdown
 from ..topic_taxonomy import flatten_topics
@@ -165,6 +166,10 @@ def build_context(sections: dict[str, list[Signal]], track: dict, date_str: str,
                   watchlist: list[Signal] | None = None, language: str | None = None) -> dict:
     language = language or track.get("output", {}).get("language")
     t = i18n.strings(language)
+    assign_entrepreneur_topics(
+        (signal for items in sections.values() for signal in items),
+        track,
+    )
     cluster = bool(flatten_topics(track.get("topics")))
     topic_counts: dict[str, int] = {}
     section_ctx = []

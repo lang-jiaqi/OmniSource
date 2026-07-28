@@ -59,8 +59,8 @@ github_days: 14
 github_top: 30
 
 llm:
-  provider: openai
-  model: gpt-4o-mini
+  provider: openai_compatible
+  model: gpt-5.6-luna
 
 output:
   top_papers: 8
