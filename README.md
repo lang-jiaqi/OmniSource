@@ -2,244 +2,234 @@
 
 <h1>🔭 OmniSource</h1>
 
-<p>
-  <strong>联结全域时代信号，与科研者、创变者、开发者共探 AI 世界的无限可能</strong><br>
-   ☘️三重信息流通道：科研日报｜创业市场雷达｜开发者工具周刊
-</p>
+<p><strong>Don't read everything. Find what matters next.</strong><br>
+AI-driven open research intelligence<br>
+Turn papers, AI tools, startup signals, and community discussions into reports you can actually scan.</p>
 
-<p>
-  <img src="https://img.shields.io/badge/license-PolyForm%20Noncommercial-8bd3a8?style=for-the-badge" alt="PolyForm Noncommercial License">
-  <img src="https://img.shields.io/badge/Python-3.11%2B-8ab4f4?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/built%20with-uv-b39ddb?style=for-the-badge&logo=uv&logoColor=white" alt="Built with uv">
-  <img src="https://img.shields.io/badge/GitHub%20Issues-ready-24292f?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Issues ready">
-  <img src="https://img.shields.io/badge/PRs-welcome-f4c95d?style=for-the-badge&logo=github&logoColor=white" alt="PRs welcome">
-</p>
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-8bd3a8.svg?style=for-the-badge)](LICENSE)
+[![Built with uv](https://img.shields.io/badge/built%20with-uv-4B275F?style=for-the-badge&logo=uv&logoColor=white)](https://github.com/astral-sh/uv)
+[![Python](https://img.shields.io/badge/python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Live demo](https://img.shields.io/badge/Live-demo-7c83ff?style=for-the-badge&logo=githubpages&logoColor=white)](https://lang-jiaqi.github.io/omnisource-site/en/)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge&logo=github&logoColor=white)](../../pulls)
 
-<p>
-  🌐 <a href="https://lang-jiaqi.github.io/omnisource-site/">访问 OmniSource 官网</a>
-</p>
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white)
+![Claude](https://img.shields.io/badge/Claude-D97757?style=flat-square&logo=anthropic&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white)
+![OpenAI-compatible](https://img.shields.io/badge/+_OpenAI--compatible-555?style=flat-square)
 
-<p>
-  <a href="https://lang-jiaqi.github.io/omnisource-site/report.html">科研报告</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html">创业信息流</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/tools.html">AI 工具雷达</a> ·
-  <a href="README.en.md">English</a>
-</p>
+Self-hosted · multi-source · bilingual reports · customizable tracks
+
+[🏠 Official site](https://lang-jiaqi.github.io/omnisource-site/en/) · [📖 Research report](https://lang-jiaqi.github.io/omnisource-site/en/report.html) · [🧰 Official tool radar](https://lang-jiaqi.github.io/omnisource-site/en/tools.html) · [📋 Sample briefing](examples/reports/en/llm-agents.md) · [📚 Docs](docs) · [中文](README.zh-CN.md)
 
 </div>
 
-信息越来越多，真正值得关注的东西反而更难找到。OmniSource 从论文、技术博客、GitHub、行业媒体和社区中捕捉信号，去重、筛选、排序，最后交给你一份值得打开的报告。
+## Why
 
-你可以直接阅读官网的统一信息源，也可以 Fork 仓库，改写自己的关键词和来源，让专属报告自动发布到 GitHub Issues。📝
+Research updates are scattered across arXiv, Hugging Face Daily Papers, lab blogs, GitHub, X/Twitter, Reddit, Zhihu, Xiaohongshu, and more. Checking each place manually works, but it does not scale well as a daily habit.
 
-## 📬 两种使用方式
+OmniSource keeps the workflow simple: collect from configured sources, deduplicate, filter by your track, rank the candidates, and publish a Markdown report or GitHub Issue. It does not replace reading; it handles the first pass so you can decide what deserves attention.
 
-| 入口 | 适合谁 | 内容控制权 |
+```
+collect  ->  deduplicate  ->  filter by track  ->  rank  ->  optional explanation  ->  publish
+arXiv / HF / RSS / GitHub / HN / Reddit / X / Zhihu / Xiaohongshu      Markdown / GitHub Issue
+```
+
+It is designed for people who follow a field over time: graduate students, research engineers, lab teams, or anyone who wants a repeatable source-review routine.
+
+The official website and the open-source package share the same collection,
+deduplication, relevance, quality, ranking, and quota logic. An open-source fork
+can add or replace sources, but every new candidate still goes through the same
+curated pipeline. The website only differs in using the team's maintained
+official source set. The AI-tools track additionally uses six shared scores:
+relevance, practical value, freshness, usability, credibility, and differentiation.
+
+## What It Does
+
+- **Track-based configuration**: describe a research direction with keywords, arXiv categories, RSS feeds, GitHub queries, accounts, and negative filters. Tracks are grouped under `research/`, `venture/`, and `builder/` by audience.
+- **Multi-source collection**: supports arXiv, Hugging Face Daily Papers, RSS, GitHub Trending/Search, Hacker News, Reddit, X/Twitter, Xiaohongshu, and Zhihu.
+- **Deduplication with evidence**: if a paper appears on arXiv, HF, X, or a blog, OmniSource keeps it as one item and attaches the source links and signals.
+- **Relevance filtering**: combines track rules, keywords, categories, source signals, quality checks, and feedback preferences.
+- **Optional model-written notes**: with an API key, papers can include why to read them, the core idea, a method brief, and topic labels. Without a key, the basic report still works.
+- **Structured outputs**: outputs Markdown, JSONL, and GitHub Issues. The official website is maintained separately from this DIY package.
+- **Optional feedback import**: repository-owner feedback can be summarized into preferences for later runs when a fork chooses to enable that workflow.
+
+## Demo
+
+| | |
+|---|---|
+| **[Official site](https://lang-jiaqi.github.io/omnisource-site/en/)**: the project's unified information source | **[Research report](https://lang-jiaqi.github.io/omnisource-site/en/report.html)**: the official multi-track view |
+| **DIY output**: your fork publishes GitHub Issues | **Sample reports**: [llm-agents](examples/reports/en/llm-agents.md) · [ai-safety](examples/reports/en/ai-safety.md) · [world-models](examples/reports/en/world-models.md) · [robotics](examples/reports/en/robotics.md) · [weekly](examples/reports/en/weekly-llm-agents.md) |
+
+Report items keep source, date, code links, community signals, and short notes when available. The format looks like this:
+
+```
+## 1. Example Systems Paper: Reducing KV Cache Memory for Long-Context Inference ...
+- priority high · relevance 1.00 · 2026-06-21 · via hf_papers · 👍 74
+- Link: https://arxiv.org/abs/xxxx.xxxxx · Code: https://github.com/org/repo
+
+Why it matters: It targets KV-cache memory pressure in long-context inference with a reproducible systems setup.
+Key idea: Compress and tier older token cache entries to reduce GPU memory use while preserving generation quality.
+```
+
+## 🚀 Quickstart
+
+Goal: see your first report in about five minutes.
+
+There are two ways to use the repository:
+
+| Path | Best for | What you do |
 |---|---|---|
-| [官方网站 🌐](https://lang-jiaqi.github.io/omnisource-site/) | 想直接阅读统一信息源的人 | 项目团队维护 |
-| GitHub Issue 🧩 | 想 DIY 自己的信息流的人 | Fork 后自行修改 |
+| **Fast path** | First-time users | Keep an existing track and run GitHub Actions |
+| **Custom path** | Personalized reading | Copy a track, edit its YAML, then add it to `active_tracks` |
 
-这个公开仓库只负责 GitHub Issue 这一种 DIY 方式。官网的日报、周报和邮箱订阅属于官方网站。
+#### Step 0 · Prepare the environment
 
-本地的 `reports/` 目录只保存 Markdown 文件，方便查看和调试。
-
-## 🧭 三种自定义 track
-
-你可以根据自己的身份，选择一种报告方向，再在 Fork 中继续修改：
-
-| 类型 | 适合关注什么 | 官网对应入口 | 开源 YAML track |
-|---|---|---|---|
-| **研究者** 🔬 | 论文、研究方法、实验室动态、开源实现 | [科研报告](https://lang-jiaqi.github.io/omnisource-site/report.html) | [ai-algorithm.yaml](tracks/research/ai-algorithm.yaml) |
-| **企业家** 🚀 | 融资、产品、市场、创始团队和招聘 | [创业信息流](https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html) | [entrepreneur.yaml](tracks/venture/entrepreneur.yaml) |
-| **社区开发者** 🧑‍💻 | AI 工具 | [AI 工具雷达](https://lang-jiaqi.github.io/omnisource-site/tools.html) | [ai-tools.yaml](tracks/builder/ai-tools.yaml) |
-
-三种类型的本质是同一个：复制一个 track，改成你自己的关键词、来源和筛选标准，然后通过 GitHub Issue 查看自己的结果。目录名分别是 `research/`、`venture/` 和 `builder/`；科研目录里的每个 YAML 就是一个具体的 research domain。
-
-官网和 OpenSource 使用同一套抓取、去重、相关性判断、质量筛选、排序和数量控制。OpenSource 可以自由增加或替换 sources，但新增来源只会扩大候选池，仍然必须经过同样的精选机制；官网只是使用项目团队维护的官方 sources。
-
-其中 AI 工具 track 还会统一使用六项评分：相关性、实用价值、新鲜度、可用性、可信度、差异化。
-
-## 🚀 快速开始
-
-### Step 0 · 🧰 准备环境
-
-在终端确认环境：
+Check the terminal tools:
 
 ```bash
-python3 --version   # 需要 3.11+
+python3 --version   # 3.11+
 uv --version
 git --version
 ```
 
-如果没有 `uv`，安装：
+If `uv` is missing:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Windows PowerShell：
+Windows PowerShell:
 
 ```powershell
 irm https://astral.sh/uv/install.ps1 | iex
 ```
 
-另外需要一个 GitHub 账号，用来 Fork 仓库和接收 Issues。
+You also need a GitHub account to fork the repository and receive Issues.
 
-### Step 1 · 🍴 Fork 仓库
-
-点击 GitHub 右上角 **Fork**，然后在自己的 Fork 中打开 **Issues** 和 **Actions**。
-如果要在本地修改 track，再把自己的 Fork 克隆下来：
-
-**macOS / Linux**
+#### Step 1 · Clone
 
 ```bash
-git clone https://github.com/你的用户名/OmniSource.git && cd OmniSource
+git clone https://github.com/lang-jiaqi/OmniSource && cd OmniSource
 ```
 
-**Windows PowerShell**
+#### Step 2 · Preview collection, no key required
 
-```powershell
-git clone https://github.com/你的用户名/OmniSource.git
-Set-Location OmniSource
+```bash
+uv run omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
 ```
 
-### Step 2 · 🔑 配置模型
+This only exercises the public collection and report pipeline. It does not build the private official website and does not need an API key.
+Outputs:
 
-在 **Settings → Secrets and variables → Actions** 添加密钥；模型写在 track 的 `llm` 部分：
+- Markdown report: `reports/`
+- Structured data: `reports/*.signals.jsonl`
 
-| 用途 | 推荐模型示例 |
+`--no-llm` skips "why it matters / key idea"; `--no-memory` prevents local tests from marking items as already reported.
+
+#### Step 3 · Add model-written notes
+
+```bash
+cp .env.example .env
+# add the key required by your track
+
+uv run omnisource run --track research/ai-algorithm
+uv run omnisource run --track research/ai-algorithm --days 7    # temporarily widen the paper/HF window
+uv run omnisource weekly --track research/ai-algorithm           # weekly digest
+```
+
+Recommended model choices:
+
+| Use | Examples |
 |---|---|
-| 信息收集、摘要、日常报告 | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
-| 更强的推理、筛选和判断 | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
+| Fast collection notes and summaries | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
+| Stronger reasoning and ranking | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
 
-OpenAI 官方接口：
+OpenAI uses `OPENAI_API_KEY` and `provider: openai`. Gemini, Qwen, and gateways
+use `OPENAI_COMPATIBLE_API_KEY` / `OPENAI_COMPATIBLE_BASE_URL` and
+`provider: openai_compatible`; set `model` to the name supported by that service.
+The secret name stays `OPENAI_COMPATIBLE_API_KEY`; its value is the Gemini, Qwen,
+or gateway key.
 
-~~~
-OPENAI_API_KEY=你的 OpenAI API key
-~~~
+If a track uses Anthropic, add `ANTHROPIC_API_KEY`. If it uses Reddit's OAuth
+backend, also add `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET`. These are
+optional; unused sources need no credentials.
 
-Gemini、Qwen 或中转站使用 OpenAI-compatible 接口：
+The main DIY research example is `research/ai-algorithm`; the public developer
+example is [`builder/ai-tools.yaml`](tracks/builder/ai-tools.yaml). The official
+website's AI-tool radar remains a separate, richer weekly view.
 
-~~~
-OPENAI_COMPATIBLE_API_KEY=你的 Gemini / Qwen / 中转站 key
-OPENAI_COMPATIBLE_BASE_URL=https://对应服务的兼容接口/v1
-~~~
+#### Step 4 · Run GitHub Issue reports automatically
 
-track 中对应填写：
+After forking, configure GitHub Actions:
 
-~~~yaml
-llm:
-  provider: openai                 # OpenAI 官方
-  model: gpt-4.1-mini
-~~~
+1. **Add secrets**: Settings → Secrets and variables → Actions
+   - `OPENAI_API_KEY`, or `OPENAI_COMPATIBLE_API_KEY` + `OPENAI_COMPATIBLE_BASE_URL`
+   - `ANTHROPIC_API_KEY` (only for Anthropic tracks)
+   - `REDDIT_CLIENT_ID` + `REDDIT_CLIENT_SECRET` (only for Reddit OAuth)
+   - `APIFY_TOKEN` (optional; enables Twitter/X buzz)
+2. **Enable Issues** under Settings → General → Features.
+3. **Run once manually**: Actions → `Daily GitHub Issue Report` → **Run workflow**. Optionally set `days`.
+4. **Schedule**: the public workflow opens one GitHub Issue per active track. The weekly workflow does the same on Mondays.
 
-Gemini、Qwen 和中转站：
+The official website, its AI-tool radar, email subscriptions, Settings page,
+and Pages deployment are maintained separately in the private project workspace.
 
-~~~yaml
-llm:
-  provider: openai_compatible
-  model: gemini-2.5-flash       # 或 qwen-plus、服务商支持的其他模型
-~~~
+Each track keeps a record of published items by default. Daily runs do not repeat
+items from earlier daily runs, and weekly runs do not repeat items from earlier
+weekly runs. Weekly memory is separate from daily memory, so a weekly digest is
+not emptied just because an item appeared in a daily report. Use `--no-memory`
+only when debugging and you intentionally want to disable this protection.
+GitHub Actions stores `data/memory.db` in the repository's Actions cache, so this
+memory survives across scheduled runs. Daily and weekly reports share the same
+database but use separate memory scopes. Clearing the Actions cache resets this
+history and may allow older items to appear again.
 
-密钥名称固定使用 `OPENAI_COMPATIBLE_API_KEY`；模型名和 Base URL 以服务商文档为准。GitHub Actions 创建 Issue 所需的 `GITHUB_TOKEN` 会自动提供。
+## 📥 Sources
 
-如果 track 使用 Anthropic，添加 `ANTHROPIC_API_KEY`；如果使用 Reddit 的 OAuth 模式，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET`。这些都是可选项，不用的来源不需要配置。
+| Source | What | Setup |
+|---|---|---|
+| **arXiv** | papers | out of the box |
+| **Hugging Face** | daily papers + upvotes | out of the box |
+| **Lab-blog RSS** | OpenAI/Google/BAIR… | out of the box |
+| **BlogrXiv** | curated AI research blogs and technical writing | public catalogue, out of the box; see [`docs/blogrxiv-setup.md`](docs/blogrxiv-setup.md) |
+| **GitHub** | Trending repos + recent momentum | out of the box |
+| **Hacker News** | community discussion | out of the box |
+| **Reddit** | community discussion | local OpenCLI, or OAuth with `REDDIT_CLIENT_ID/SECRET` |
+| **Twitter/X** | tweet buzz | configure broad queries or exact account handles; set `APIFY_TOKEN` to enable |
+| **Xiaohongshu** | public posts from specified creators | install OpenCLI locally and connect a logged-in Chrome session; see [`docs/xiaohongshu-setup.md`](docs/xiaohongshu-setup.md) |
+| **Zhihu** | articles and answers from specified users | install OpenCLI locally and connect a logged-in Chrome session |
 
-### Step 3 · ⚡ 快速启动：使用现有 track
+> A community post (HN/Reddit/X) that links a paper folds into **that paper's buzz** — not a separate noisy entry.
+> Seeded accounts are not your personal following list; they are high-signal accounts combined with keyword search.
 
-如果你想先看一份报告，不需要创建或修改 YAML。只要在
-[omnisource.yaml](omnisource.yaml) 的 `active_tracks` 中保留已有方向：
+## Quick source setup
 
-```yaml
-active_tracks:
-  - research/ai-algorithm
-  - venture/entrepreneur
-```
-
-保存后打开 **Actions → Daily GitHub Issue Report → Run workflow**。每个 active track
-会生成一份独立的 GitHub Issue；也可以运行 **Weekly GitHub Issue Report** 生成周报。
-
-这条路径适合第一次使用：只需要完成 Step 0–2，然后直接运行 Actions。已有示例包括 [AI 算法](tracks/research/ai-algorithm.yaml)、[创业信息](tracks/venture/entrepreneur.yaml) 和 [AI 工具](tracks/builder/ai-tools.yaml)。
-
-### Step 4 · 🛠️ 个性化配置：创建自己的 track
-
-如果你想长期跟踪自己的主题，复制一个最接近的示例。每个名称都对应 `tracks/<类型>/` 下的一个 YAML 文件：
-
-**macOS / Linux**
-
-```bash
-cp tracks/research/ai-algorithm.yaml tracks/research/my-radar.yaml
-```
-
-**Windows PowerShell**
-
-```powershell
-Copy-Item tracks/research/ai-algorithm.yaml tracks/research/my-radar.yaml
-```
-
-然后修改名称、来源、关键词和输出数量：
-
-```yaml
-name: my-radar
-display_name: 我的关注方向
-description: 我想长期跟踪的内容
-
-sources:
-  - arxiv
-  - rss
-  - github
-
-keywords:
-  - 你的关键词
-  - another keyword
-
-output:
-  top_papers: 10
-  top_repos: 5
-  top_blogs: 5
-  language: 中文
-```
-
-最后在 [omnisource.yaml](omnisource.yaml) 中加入它：
-
-```yaml
-active_tracks:
-  - research/ai-algorithm
-  - venture/entrepreneur
-  - research/my-radar
-```
-
-常用的可调项：关键词与排除词、arXiv 分类、RSS 地址、每类保留数量、报告语言和回看天数。可参考 [AI 算法示例](tracks/research/ai-algorithm.yaml)、[创业示例](tracks/venture/entrepreneur.yaml) 和 [AI 工具示例](tracks/builder/ai-tools.yaml)。
-
-配置完成后，把新 track 加入 `active_tracks`，再回到 Step 3 运行 Actions。它只会影响你自己的 Fork，不会改变官方网站。
-
-### Step 5 · 📡 配置额外信息源
-
-在 track 的 `sources` 中打开来源，再填写对应配置块。建议先从公开来源开始：arXiv、Hugging Face、RSS、GitHub 和 Hacker News 都不需要登录、API key、OpenCLI 或 Browser Bridge。
-
-RSS 的配置示例：
+Choose sources in the track, then add the matching config block:
 
 ```yaml
 sources:
   - arxiv
   - rss
-  - github
+  - twitter
+  - xiaohongshu
+  - zhihu
+```
 
+RSS is the easiest option and works in GitHub Actions:
+
+```yaml
 rss_feeds:
   - https://huggingface.co/blog/feed.xml
-  - https://blog.research.google/feeds/posts/default
   - https://openai.com/news/rss.xml
 rss_days: 21
 ```
 
-**Twitter / X：用 Apify 跑 GitHub Actions**
-
-在 Fork 仓库的 **Settings → Secrets and variables → Actions** 添加 `APIFY_TOKEN`，然后写入：
+For GitHub Actions, Twitter/X does not need OpenCLI. Add `APIFY_TOKEN` to your
+fork's Actions secrets and use the CI-safe `apify` backend:
 
 ```yaml
 sources:
   - twitter
-
 twitter:
   mode: apify
   queries: ["AI agent", "LLM tool"]
@@ -247,29 +237,40 @@ twitter:
   max_results: 50
 ```
 
-Apify 通常有免费额度，超出后可能收费；它不需要 Chrome、Browser Bridge 或 OpenCLI。完整字段见 [Twitter/X 配置](docs/twitter-setup.md)。如果只在本地复用 Chrome 登录状态，也可以使用 OpenCLI，但这不是 GitHub Actions 的推荐路径。
+Apify may have a free quota and can charge after that quota is used. It does not
+need Chrome, Browser Bridge, or OpenCLI.
 
-**小红书 / 知乎：仅适合本地 OpenCLI**
-
-这两个来源需要安装 [OpenCLI](https://github.com/jackwener/OpenCLI) 和 Browser Bridge，并在 Chrome 登录对应网站；普通 GitHub Actions runner 访问不到你的浏览器。先复制示例：
-
-**macOS / Linux**
-
-```bash
-cp examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-```
-
-先检查 OpenCLI：
+For local-only collection, OpenCLI remains an optional backend. Install OpenCLI
+and its Browser Bridge, log into x.com in Chrome, and check the connection:
 
 ```bash
 opencli doctor
+opencli twitter search '"LLM serving"' --product live --limit 5 -f json
+opencli twitter tweets karpathy --limit 5 -f json
+```
+
+```yaml
+twitter:
+  mode: opencli
+  search:
+    enabled: true
+    queries: ["LLM serving", "reasoning model"]
+  accounts:
+    enabled: true
+    handles: [karpathy, OpenAI, HuggingFace]
+```
+
+Xiaohongshu and Zhihu use the same logged-in OpenCLI browser session:
+
+```bash
 opencli xiaohongshu user USER_ID --limit 3 -f json
 opencli zhihu user-articles USER_NAME --limit 3 -f json
 opencli zhihu user-answers USER_NAME --limit 3 -f json
 ```
 
-如果 macOS 出现 `Unable to find application named 'OpenCLIApp'`，不是账号没登录，而是
-系统里的 `opencli` 启动器没有成功拉起后台程序。直接使用 App 内置 runtime：
+On macOS, if `opencli doctor` says `Unable to find application named
+'OpenCLIApp'`, the Browser Bridge login is not the problem. The managed
+`opencli` launcher failed to start its daemon. Use the bundled runtime instead:
 
 ```bash
 env -u OPENCLI_DAEMON_PORT \
@@ -278,116 +279,101 @@ env -u OPENCLI_DAEMON_PORT \
   doctor
 ```
 
-验证成功后，在同一个终端告诉 OmniSource 使用这个命令：
+Then keep this setting in the same terminal before running the track:
 
 ```bash
 export OPENCLI_COMMAND='env -u OPENCLI_DAEMON_PORT /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js'
 uv run omnisource run --track builder/my-social-radar
 ```
 
-**Windows PowerShell**
+On Windows, use `opencli` from PowerShell if `opencli doctor` reports
+`Daemon: running` and `Extension: connected`; do not copy the macOS path.
 
-```powershell
-Copy-Item examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
-opencli doctor
-opencli xiaohongshu user USER_ID --limit 3 -f json
-opencli zhihu user-articles USER_NAME --limit 3 -f json
-opencli zhihu user-answers USER_NAME --limit 3 -f json
-```
+Their YAML blocks use `backend: opencli` and a list of `creators`. These browser
+sources are for local runs; a standard GitHub Actions runner cannot access your
+Chrome session. Use [Twitter/X setup](docs/twitter-setup.md) for the CI-safe
+Apify option, and [customizing your radar](docs/customizing-your-radar.md) for
+the Xiaohongshu/Zhihu fields.
 
-Windows 不要复制上面的 macOS 路径。Windows 如果 `opencli doctor` 能显示
-`Daemon: running` 和 `Extension: connected`，直接使用 `opencli` 即可。
-
-简单来说：绿色的 Browser Bridge 只代表浏览器扩展已准备好；OmniSource 还需要
-OpenCLI 的后台 daemon。macOS 的 `opencli` 启动器有时拉不起 daemon，才需要上面的
-App 内置 runtime。登录小红书和知乎本身不是这次报错的原因。
-
-把示例中的作者名称和 `USER_ID` 替换成真实信息，再按 [小红书配置](docs/xiaohongshu-setup.md) 和 [自定义配置说明](docs/customizing-your-radar.md) 补充知乎字段。公开来源和 Apify 不需要安装 OpenCLI。
-
-提示：OpenCLI 1.8.5 直接运行知乎 `user-articles` 时，偶尔会出现
-`Navigation rejected`。这不是登录失败；OmniSource 会捕获这个错误，并使用浏览器会话
-fallback 读取知乎内容。要验证 OmniSource 自己的知乎 source，请在已设置
-`OPENCLI_COMMAND` 的终端运行：
+Note: OpenCLI 1.8.5 may report `Navigation rejected` for a direct Zhihu
+`user-articles` command even when the login is valid. OmniSource catches this
+case and uses a browser-session fallback. To test OmniSource's Zhihu source,
+run this in a terminal where `OPENCLI_COMMAND` is already configured:
 
 ```bash
 uv run python -c 'from omnisource.sources.zhihu import ZhihuSource; rows=ZhihuSource().fetch({"days":30,"zhihu":{"creators":[{"user":"USER_NAME","articles":True,"answers":True}]}}); print(f"zhihu_signals={len(rows)}"); [print(x.title) for x in rows]'
 ```
 
-### Step 6 · 🧪 可选：本地验证
+## How It Works
 
-如果想在运行 Actions 前检查采集、去重和筛选，可以用不调用模型的命令进行本地预览：
+OmniSource is a pluggable pipeline. Each source is first normalized into one `Signal` shape; deduplication, filtering, ranking, and publishing all work on that shape.
 
-**macOS / Linux**
+| Module | What it does |
+|---|---|
+| **Sources** [`sources/`](omnisource/sources) | normalize feeds into `Signal`s |
+| **Dedup + memory** [`memory/`](omnisource/memory) | merge across sources; don't repeat day to day |
+| **Quality filter** [`agents/quality.py`](omnisource/agents/quality.py) | drop clearly weak or off-track candidates |
+| **Content notes** [`agents/analyst.py`](omnisource/agents/analyst.py) | optional model step for relevance, short notes, and topic labels |
+| **Editor + Publishers** | render to Markdown, deliver to Issue / file |
 
-```bash
-uv sync
-uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
+## Code layout
+
+The public package follows the execution path:
+
+```text
+omnisource/              reusable pipeline and CLI
+├── sources/             source adapters
+├── agents/              collection, filtering, analysis, and editing
+├── ranking/             scoring and ordering
+├── publishers/          Markdown and GitHub Issue output
+├── llm/                 model provider adapters
+└── main.py              pipeline orchestration
+tracks/                  YAML track configurations grouped by audience
+├── research/             research domains and reports
+├── venture/              startup and market signals
+└── builder/              tools, infrastructure, and engineering
+examples/                copyable tracks and sample reports
+.github/workflows/       daily and weekly GitHub Issue jobs
+tests/                   unit tests for the public core
 ```
 
-**Windows PowerShell**
+## Configure Your Track
 
-```powershell
-uv sync
-uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
-```
+- **Example tracks**: `research/ai-algorithm` · `builder/ai-tools` (`--track <path>`); other YAML files cover additional directions.
+- **Window**: `days` in a track controls the arXiv/HF paper lookback; use `--days 7` for a temporary override.
+- **Repositories**: GitHub Trending daily/weekly comes first; when it is sparse, only recently created relevant repos fill the pool, so old incumbents do not dominate.
+- **Fastest custom track**: copy [`examples/tracks/custom-ai-radar.yaml`](examples/tracks/custom-ai-radar.yaml) to `tracks/research/my-ai-radar.yaml`, then edit keywords, categories, sources, and X/Twitter handles.
+- **Choose scheduled tracks**: edit `active_tracks` in [`omnisource.yaml`](omnisource.yaml); GitHub Actions loops over this list for daily and weekly GitHub Issue reports.
+- **Watch fixed X accounts**: use `twitter.mode: apify` for GitHub Actions, or `twitter.mode: opencli` for a local Chrome session.
+- **Watch specific paper authors**: set `watchlist.authors`; it matches paper author names, not your X follow list.
+- **Advanced tuning**: copy [`tracks/research/ai-algorithm.yaml`](tracks/research/ai-algorithm.yaml), edit ranking weights, `watchlist`, RSS feeds, and GitHub queries.
+- **New source**: write a class in `omnisource/sources/` returning `list[Signal]`, register it — nothing else changes.
 
-如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 Step 2 配置的密钥，X 则额外使用 `APIFY_TOKEN`。
+See [`docs/`](docs): [customizing your reading setup](docs/customizing-your-radar.md) · [architecture](docs/architecture.md) · [adding a source](docs/adding-a-source.md) · [adding a track](docs/adding-a-track.md).
 
-开源版本只负责你 Fork 后的 GitHub Issue 报告，不负责官网日报、周报或邮箱订阅。每个 track 会记录已经发布的内容：日报不会重复之前的日报，周报也不会重复之前的周报；`--no-memory` 仅用于调试，会暂时关闭这项保护。
+## Status
 
-GitHub Actions 会用仓库缓存保存 `data/memory.db`，所以跨次运行也能继续去重；日报和周报共享同一份记忆库，但使用不同的记忆范围。如果你手动清空 Actions cache，下一次运行可能重新出现较早内容。
+**v0.2** — a multi-source core for DIY research reports.
 
-## 🧱 代码结构
+- The main example track is `research/ai-algorithm`; the official developer channel is maintained as the separate AI-tool radar.
+- Daily reports now target Top 15 papers + 5 repositories + 5 lab notes, with heavy author-graph enrichment for all 15 papers.
+- Markdown templates and sample reports are bilingual: the Chinese README links to Chinese samples, and the English README links to English samples.
+- Repository discovery is Trending-first: daily/weekly GitHub Trending comes first; sparse days are filled only by recently created relevant repos, not old incumbents.
+- The paper lookback window is configurable through track `days`, CLI `--days`, and the GitHub Actions manual-run input.
+- Twitter/X can be enabled with `APIFY_TOKEN`; default tracks combine keyword search with high-signal account seeds and fold tweets into paper/repo buzz.
+- The public workflows open GitHub Issues only. The official website is maintained separately and is not part of this DIY package.
 
-开源区的目录按“抓取 → 筛选 → 发布”的流程组织：
+**v0.1** — multi-source fetch, deduplication, relevance checks, summaries, quality filtering, author graphs, daily automation, bilingual output.
 
-~~~text
-omnisource/              核心 pipeline 和 CLI
-├── sources/             各种信息源适配器
-├── agents/              抓取、筛选、分析和编辑
-├── ranking/             排序和评分
-├── publishers/          Markdown 与 GitHub Issue 发布
-├── llm/                 各类模型接口适配
-└── main.py              pipeline 总编排
-tracks/                  按 audience 分类的 YAML 关注方向
-├── research/             研究者的科研方向
-├── venture/              企业家的创业信息
-└── builder/              社区开发者的工具与工程方向
-examples/                可复制的 track 和示例报告
-.github/workflows/       日报与周报 GitHub Issue workflow
-tests/                   开源核心测试
-~~~
+Roadmap: more stable affiliation enrichment, more source connectors, team workflows.
 
-通常只需要改 `tracks/<audience>/` 和 `omnisource.yaml`；只有要增加新来源或新发布方式时，才需要修改 `omnisource/`。
+## 🤝 Contributing
 
-## 🧭 常见问题
+Forks, tracks, sources, and publishers welcome. A good track is often a researcher's reading list plus their filtering rules.
 
-### 📨 Actions 运行成功，但没有 Issue
+## 📄 License
 
-确认两件事：
-
-1. 仓库的 **Issues** 已开启。
-2. workflow 文件中保留了创建 Issue 所需的权限。当前配置使用 GitHub Actions 自动提供的 GITHUB_TOKEN。
-
-### 🔐 报错 invalid_api_key
-
-检查：
-
-- Secret 名称是否完全正确；
-- API key 是否复制完整；
-- 中转站是否使用 OPENAI_COMPATIBLE_API_KEY 和 OPENAI_COMPATIBLE_BASE_URL；
-- Base URL 是否是中转站要求的 API 地址，通常需要包含 /v1；
-- track 中配置的模型是否是中转站支持的模型。
-
-### 🌐 我修改了自己的报告，会影响官方网站吗？
-
-不会。
-
-你的 Fork 只影响你自己的 GitHub Issue 报告。官方网站使用项目团队维护的独立内容和配置，和用户 Fork 分开运行。
-
-## License
-
-This project is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/).
+[PolyForm Noncommercial 1.0.0](LICENSE) © 2026 lang-jiaqi
 
 ## Authors
 
@@ -395,12 +381,14 @@ Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, w
 
 *Corresponding author: Jiaqi Lang · National University of Singapore (NUS) · lang.jiaqi@u.nus.edu*
 
-## 对世界模型感兴趣？
+## 🌍 Independent World Model Ventures
 
-本项目作者也在独立探索世界模型方向的创业机会。
+## Interested in World Models?
 
-- **Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), [email](mailto:wangbo.zhao96@gmail.com))  正在筹备一个专注于世界模型及其基础设施建设的早期创业项目，目前正在进行种子轮融资。欢迎对该方向感兴趣的投资者和战略合作伙伴联系交流。
+The authors of this project are also independently exploring entrepreneurial opportunities in the world-model space.
 
-- **Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) 是一家独立创业公司的创始人，该公司专注于世界模型与智能体游戏开发。公司致力于构建具备通用智能能力的系统，使其能够理解、预测，并最终与人类环境和真实世界进行交互。更多信息请访问：[company website](https://www.cardinal-agi.com)。
+**Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), email) is currently building an early-stage startup focused on world models and the infrastructure required to develop and scale them. The company is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
 
-上述创业项目均独立于本项目，且彼此之间不存在关联。
+**Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is committed to building systems with general-purpose intelligence that can understand, predict, and ultimately interact with human environments and the real world. For more information, please visit the [company website](https://www.cardinal-agi.com/).
+
+These ventures are independent of this project and of each other.
