@@ -1,0 +1,55 @@
+name: xiaohongshu-radar
+display_name: "小红书 AI 博主雷达"
+display_names:
+  zh: "小红书 AI 博主雷达"
+  en: "Xiaohongshu AI Creator Radar"
+description: "筛选指定小红书博主当天发布的 AI 与智能体相关内容。"
+descriptions:
+  zh: "筛选指定小红书博主当天发布的 AI 与智能体相关内容。"
+  en: "Select AI and agent posts published today by specified Xiaohongshu creators."
+
+sources:
+  - xiaohongshu
+days: 1
+keywords: ["AI Agent", "智能体", "大模型", "LLM", "推理", "OpenAI", "Claude"]
+negative_keywords: []
+
+xiaohongshu:
+  enabled: true
+  backend: opencli
+  command: opencli
+  timezone: Asia/Shanghai
+  days: 1
+  max_notes_per_creator: 20
+  fetch_details: true
+  include_unknown_dates: false
+  creators:
+    - name: "替换为博主名称"
+      profile_url: "https://www.xiaohongshu.com/user/profile/替换为用户ID"
+
+relevance_filter:
+  social:
+    allow_keyword_fallback: false
+topics: ["Agent 产品与应用", "模型与推理", "开发工具与工程", "行业观察"]
+llm:
+  provider: openai
+  model: gpt-4o-mini
+ranking:
+  relevance: 0.5
+  novelty: 0.25
+  popularity: 0.2
+  code_available: 0.05
+quality_distill:
+  min_score: 0.12
+  buffer: 10
+  fill_quota_types: [social]
+enrich_openalex: false
+review_distill: false
+graphs: false
+output:
+  top_papers: 0
+  top_repos: 0
+  top_blogs: 0
+  top_social: 10
+  language: "中文"
+  languages: ["中文", "English"]

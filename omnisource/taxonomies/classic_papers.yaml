@@ -1,0 +1,10 @@
+{
+  "papers": [
+    {"key": "transformer", "title": "Attention Is All You Need", "arxiv_id": "1706.03762", "leaf": "ai.nlp_speech"},
+    {"key": "resnet", "title": "Deep Residual Learning for Image Recognition", "arxiv_id": "1512.03385", "leaf": "ai.cv_multimodal"},
+    {"key": "bert", "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", "arxiv_id": "1810.04805", "leaf": "ai.nlp_speech"},
+    {"key": "mapreduce", "title": "MapReduce: Simplified Data Processing on Large Clusters", "doi": "10.1145/1327452.1327492", "leaf": "systems.distributed_cloud"},
+    {"key": "raft", "title": "In Search of an Understandable Consensus Algorithm", "leaf": "systems.distributed_cloud"},
+    {"key": "alexnet", "title": "ImageNet Classification with Deep Convolutional Neural Networks", "leaf": "ai.cv_multimodal"}
+  ]
+}

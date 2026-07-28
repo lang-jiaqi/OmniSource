@@ -1,0 +1,14 @@
+{% from "_sections.md.j2" import render_sections -%}
+# OmniSource {{ period }} — {{ track_name }}
+
+*Week ending {{ date }} · {{ total }} {{ labels.signals }} · {{ labels.sources }}: {{ sources }}*
+
+{% if topic_counts %}
+## {{ labels.topic_dist }}
+
+{% for topic, count in topic_counts %}
+- **{{ topic }}** — {{ count }}
+{% endfor %}
+{% endif %}
+
+{{ render_sections(sections, labels) }}

@@ -1,0 +1,69 @@
+name: ai-safety
+description: AI safety, alignment, interpretability, oversight, red-teaming.
+
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+categories:
+  - cs.AI
+  - cs.LG
+  - cs.CL
+  - cs.CR
+
+days: 3
+pool_size: 400
+
+keywords:
+  - alignment
+  - ai safety
+  - interpretability
+  - mechanistic interpretability
+  - red team
+  - red-teaming
+  - jailbreak
+  - rlhf
+  - reward model
+  - scalable oversight
+  - adversarial
+  - deceptive
+  - refusal
+  - safety
+
+negative_keywords:
+  - finance
+  - blockchain
+
+topics:
+  - alignment
+  - interpretability
+  - red-teaming / jailbreaks
+  - scalable oversight
+  - robustness / adversarial
+  - safety evaluation / benchmarks
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://bair.berkeley.edu/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+rss_days: 21
+
+github_query: "ai safety OR alignment OR interpretability OR jailbreak"
+github_days: 14
+github_top: 30
+
+llm:
+  provider: openai
+  model: gpt-4o-mini
+
+output:
+  top_papers: 8
+  top_repos: 5
+  top_blogs: 5
+  language: 中文

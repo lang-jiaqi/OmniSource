@@ -1,0 +1,96 @@
+name: robotics
+display_name: "具身智能"
+display_names:
+  zh: "具身智能"
+  en: "Embodied Intelligence"
+description: Robot learning, manipulation, vision-language-action, embodied agents.
+
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - blogrxiv
+  - github
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+hn_query: "robot learning OR embodied AI OR vision-language-action OR humanoid"
+
+categories:
+  - cs.RO
+  - cs.AI
+  - cs.LG
+  - cs.CV
+
+days: 7
+weekly_days: 14
+collection:
+  retry_factors: [2, 4]
+  max_days: 120
+minimum_output:
+  paper: 10
+  repo: 5
+  blog: 8
+pool_size: 600
+
+keywords:
+  - robot
+  - robotic
+  - manipulation
+  - vision-language-action
+  - VLA
+  - embodied
+  - locomotion
+  - grasping
+  - dexterous
+  - humanoid
+  - sim-to-real
+  - imitation learning
+  - teleoperation
+  - policy learning
+
+negative_keywords:
+  - finance
+  - blockchain
+
+topics:
+  - manipulation
+  - vision-language-action (VLA)
+  - locomotion / humanoid
+  - imitation / policy learning
+  - sim-to-real
+  - embodied agents
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://bair.berkeley.edu/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+  - https://spectrum.ieee.org/feeds/topic/robotics.rss
+  - https://www.therobotreport.com/feed/
+  - https://robohub.org/feed/
+rss_days: 60
+blogrxiv_days: 14
+
+github_query: "robot learning OR manipulation OR vision-language-action OR humanoid"
+github_days: 30
+github_top: 30
+
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
+
+quality_distill:
+  min_score: 0.14
+  buffer: 6
+  fill_quota_types:
+    - paper
+    - blog
+
+output:
+  top_papers: 10
+  top_repos: 5
+  top_blogs: 8
+  language: 中文

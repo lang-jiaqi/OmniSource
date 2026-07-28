@@ -1,0 +1,15 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+*.db
+.DS_Store
+/reports/
+/data/*
+!/data/prompt_feedback.md
+!/data/feedback_events.jsonl
+!/data/preference_summary.md
+.uv-cache/

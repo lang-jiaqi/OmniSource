@@ -1,0 +1,220 @@
+name: entrepreneur
+display_name: "创业市场监测"
+display_names:
+  zh: "创业市场监测"
+  en: "Startup Market Radar"
+description: "从融资新闻、创业媒体和创业团队动态中发现 AI 初创公司的融资、产品、团队与市场信号。"
+descriptions:
+  zh: "从融资新闻、创业媒体和创业团队动态中发现 AI 初创公司的融资、产品、团队与市场信号。"
+  en: "Discover AI startup funding, product, team, and market signals from funding desks, startup media, and founder-led company updates."
+
+# These sources are public and do not require a paid database account.
+sources:
+  - rss
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+days: 60
+weekly_days: 90
+collection:
+  retry_factors: [2, 3]
+  max_days: 180
+minimum_output:
+  blog: 30
+  social: 5
+rss_days: 60
+rss_feeds:
+  # Funding desks and venture reporting
+  - https://techcrunch.com/category/startups/feed/
+  - https://techcrunch.com/category/venture/feed/
+  - https://news.crunchbase.com/feed/
+  - https://sifted.eu/feed
+  - https://tech.eu/feed/
+  - https://www.eu-startups.com/feed/
+  - https://www.finsmes.com/feed
+  - https://techfundingnews.com/feed/
+  - https://www.startupdaily.net/feed/
+  - https://www.startuphub.ai/feed/
+  - https://www.producthunt.com/feed
+  # AI and technology desks for product/company updates
+  - https://venturebeat.com/category/ai/feed/
+  - https://www.technologyreview.com/feed/
+  - https://www.theverge.com/rss/ai-artificial-intelligence/index.xml
+  - https://www.latent.space/feed
+  # Founder, operator, and early-team reporting
+  - https://a16z.com/feed/
+  - https://review.firstround.com/feed.xml
+
+# Hacker News is used only as a secondary discovery source for founder,
+# funding, launch, and developer-tool discussions. It is not the main source
+# for company facts; every item still links back to its public discussion or
+# original article.
+hn_query: "AI startup OR startup funding OR venture capital OR founder OR YC OR developer tools"
+hn_top: 50
+
+keywords:
+  - startup
+  - AI startup
+  - artificial intelligence
+  - machine learning
+  - deep learning
+  - generative AI
+  - foundation model
+  - large language model
+  - LLM
+  - multimodal
+  - computer vision
+  - robotics
+  - agentic
+  - inference
+  - model training
+  - GPU
+  - OpenAI
+  - Anthropic
+  - DeepMind
+  - Mistral
+  - Cohere
+  - Hugging Face
+  - funding
+  - fundraise
+  - raised
+  - investment
+  - venture
+  - seed round
+  - series A
+  - series B
+  - series C
+  - valuation
+  - acquisition
+  - founder
+  - cofounder
+  - co-founder
+  - hiring
+  - recruit
+  - executive
+  - team
+  - organization
+  - launch
+  - product
+  - pricing
+  - enterprise
+  - 融资
+  - 投资
+  - 创业
+  - 创始人
+  - 招聘
+  - 团队
+  - 发布
+  - 产品
+  - 定价
+  - 收购
+  - 估值
+
+negative_keywords:
+  - sports
+  - celebrity
+  - cryptocurrency
+  - gambling
+
+relevance_filter:
+  blog:
+    allow_keyword_fallback: false
+    min_anchor_hits: 1
+    anchor_keywords:
+      - AI
+      - AI startup
+      - artificial intelligence
+      - machine learning
+      - deep learning
+      - generative AI
+      - foundation model
+      - large language model
+      - LLM
+      - multimodal
+      - computer vision
+      - robotics
+      - embodied AI
+      - agentic
+      - AI agent
+      - inference
+      - model training
+      - fine-tuning
+      - reinforcement learning
+      - GPU
+      - CUDA
+      - OpenAI
+      - Anthropic
+      - DeepMind
+      - Mistral
+      - Cohere
+      - Hugging Face
+  social:
+    allow_keyword_fallback: false
+    min_anchor_hits: 1
+    anchor_keywords:
+      - AI
+      - AI startup
+      - artificial intelligence
+      - machine learning
+      - generative AI
+      - foundation model
+      - LLM
+      - multimodal
+      - robotics
+      - agentic
+      - inference
+      - GPU
+      - OpenAI
+      - Anthropic
+      - DeepMind
+      - Mistral
+      - Cohere
+      - Hugging Face
+
+topics:
+  - name: 资本与公司
+    children:
+      - 融资与投资
+      - 并购与公司动作
+  - name: 产品与市场
+    children:
+      - 产品发布与定价
+      - 企业采用与开发者生态
+  - name: 团队与招聘
+    children:
+      - 创业团队与联合创始人
+      - 招聘与组织变化
+
+topic_translations:
+  资本与公司: Capital and Companies
+  融资与投资: Funding and Investment
+  并购与公司动作: M&A and Company Moves
+  产品与市场: Products and Market
+  产品发布与定价: Product Launches and Pricing
+  企业采用与开发者生态: Enterprise Adoption and Developer Ecosystem
+  团队与招聘: Startup Teams and Hiring
+  创业团队与联合创始人: Startup Teams and Co-founders
+  招聘与组织变化: Hiring and Organization
+
+llm: {}
+review_distill: false
+enrich_openalex: false
+graphs: false
+
+quality_distill:
+  min_score: 0.30
+  buffer: 6
+
+output:
+  top_papers: 0
+  # Collect a large RSS shortlist first; the public feed then balances it
+  # across capital, product, people, and market signals.
+  top_repos: 0
+  top_blogs: 40
+  top_social: 10
+  analysis_buffer: 0
+  language: 中文
+  languages:
+    - 中文

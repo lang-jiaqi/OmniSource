@@ -1,0 +1,112 @@
+name: llm-agents
+display_name: "AI 智能体"
+display_names:
+  zh: "AI 智能体"
+  en: "AI Agents"
+description: LLM agents, tool use, computer use, reasoning, planning.
+
+# Which sources to pull from (resolved against omnisource/sources SOURCE_REGISTRY).
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - blogrxiv
+  - github
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+# Community discussion → folds onto the papers/repos it links (buzz), via L2 dedup.
+hn_query: "llm agent OR agentic"
+
+# Personalization: papers from these authors are surfaced regardless of ranking
+# (a "🔔 你关注的人" section). Edit to the researchers you actually follow.
+watchlist:
+  authors:
+    - Yann LeCun
+    - Chelsea Finn
+  top: 10
+
+# Lab/company blogs for the RSS source. Blogs are sparse, so rss_days is wider.
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://bair.berkeley.edu/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+rss_days: 21
+
+# GitHub source: repos matching this query, pushed within github_days, by stars.
+github_query: "agentic OR llm agent OR autonomous agent"
+github_days: 14
+github_top: 30
+
+# arXiv categories to pull from.
+categories:
+  - cs.CL
+  - cs.AI
+  - cs.LG
+  - cs.CV
+
+# How many days back to look (arXiv is quiet on weekends, so 3 is a safe default).
+days: 3
+collection:
+  retry_factors: [2, 4]
+  max_days: 90
+minimum_output:
+  paper: 8
+  repo: 5
+  blog: 5
+
+# Upper bound on how many papers to pull before filtering.
+pool_size: 400
+
+# A paper scores 1 point per distinct keyword it matches (in title + abstract).
+keywords:
+  - agent
+  - agentic
+  - tool use
+  - tool-use
+  - function calling
+  - computer use
+  - reasoning
+  - planning
+  - multi-agent
+  - autonomous
+  - llm agent
+
+# A paper matching any of these is dropped entirely.
+negative_keywords:
+  - finance
+  - blockchain
+
+# Sub-topics WITHIN this direction. The report groups items under these so the
+# briefing stays anchored to the track while showing what's happening by theme.
+topics:
+  - agent evaluation / benchmarks
+  - multi-agent systems
+  - tool use / function calling
+  - reasoning / planning
+  - memory / RAG agents
+  - agent safety / robustness
+  - GUI / computer-use agents
+
+# LLM analyst: judges semantic relevance and explains why each item matters.
+# Only a small buffer above each section's quota is sent to the LLM.
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
+
+# How much each component counts toward an item's final score. Weights are
+# normalized signals (popularity is scaled within each section).
+ranking:
+  relevance: 0.4
+  novelty: 0.3
+  popularity: 0.2
+  code_available: 0.1
+
+output:
+  top_papers: 8
+  top_repos: 5
+  top_blogs: 5
+  language: 中文

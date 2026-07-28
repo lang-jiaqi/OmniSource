@@ -1,0 +1,20 @@
+{
+  "venue_registry_version": "cs-top-venues-v1",
+  "venues": [
+    {"id": "neurips", "names": ["NeurIPS", "NIPS", "Conference on Neural Information Processing Systems"], "leaves": ["ai.ml_foundations", "ai.deep_learning_foundation_models", "ai.rl_planning_agents", "theory.optimization"]},
+    {"id": "icml", "names": ["ICML", "International Conference on Machine Learning"], "leaves": ["ai.ml_foundations", "ai.deep_learning_foundation_models", "ai.rl_planning_agents"]},
+    {"id": "iclr", "names": ["ICLR", "International Conference on Learning Representations"], "leaves": ["ai.deep_learning_foundation_models", "ai.rl_planning_agents"]},
+    {"id": "acl", "names": ["ACL", "Annual Meeting of the Association for Computational Linguistics"], "leaves": ["ai.nlp_speech"]},
+    {"id": "cvpr", "names": ["CVPR", "Conference on Computer Vision and Pattern Recognition"], "leaves": ["ai.cv_multimodal"]},
+    {"id": "sosp", "names": ["SOSP", "Symposium on Operating Systems Principles"], "leaves": ["systems.os_virtualization", "systems.distributed_cloud"]},
+    {"id": "sigcomm", "names": ["SIGCOMM", "ACM SIGCOMM"], "leaves": ["systems.networking", "systems.distributed_cloud"]},
+    {"id": "sigmod", "names": ["SIGMOD", "ACM SIGMOD"], "leaves": ["systems.databases"]},
+    {"id": "popl", "names": ["POPL", "Principles of Programming Languages"], "leaves": ["software.pl", "software.formal_methods"]},
+    {"id": "stoc", "names": ["STOC", "ACM Symposium on Theory of Computing"], "leaves": ["theory.algorithms", "theory.complexity"]},
+    {"id": "oakland", "names": ["IEEE Symposium on Security and Privacy", "IEEE S&P"], "leaves": ["security.system_network", "security.privacy_applied_crypto", "security.ai_security"]},
+    {"id": "chi", "names": ["CHI", "Conference on Human Factors in Computing Systems"], "leaves": ["human.hci_cscw", "human.education_society"]},
+    {"id": "siggraph", "names": ["SIGGRAPH", "ACM SIGGRAPH"], "leaves": ["graphics.rendering_geometry", "graphics.ar_vr_media"]},
+    {"id": "sigir", "names": ["SIGIR", "International ACM SIGIR Conference"], "leaves": ["data.ir_recsys"]},
+    {"id": "kdd", "names": ["KDD", "ACM SIGKDD"], "leaves": ["data.kdd_mining", "data.web_kg_social"]}
+  ]
+}

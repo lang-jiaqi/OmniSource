@@ -1,0 +1,320 @@
+name: ai-infra
+display_name: "AI 基础设施"
+display_names:
+  zh: "AI 基础设施"
+  en: "AI Infrastructure"
+description: "面向分布式训练、推理服务、系统、编译器、内核与集群的 AI 基础设施。"
+descriptions:
+  zh: "面向分布式训练、推理服务、系统、编译器、内核与集群的 AI 基础设施。"
+  en: "AI infrastructure for distributed training, inference serving, systems, compilers, kernels, and clusters."
+
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - blogrxiv
+  - github
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+categories:
+  - cs.DC
+  - cs.OS
+  - cs.PL
+  - cs.AR
+  - cs.LG
+  - cs.AI
+days: 7
+weekly_days: 7
+collection:
+  retry_factors: [2, 4]
+  max_days: 90
+minimum_output:
+  paper: 15
+  repo: 5
+  blog: 5
+pool_size: 450
+
+keywords:
+  - "AI infrastructure"
+  - "LLM serving"
+  - "inference"
+  - "serving"
+  - "distributed training"
+  - "parallelism"
+  - "data parallel"
+  - "model parallel"
+  - "pipeline parallel"
+  - "cluster"
+  - "datacenter"
+  - "data center"
+  - "scheduler"
+  - "scheduling"
+  - "resource management"
+  - "GPU"
+  - "accelerator"
+  - "CUDA"
+  - "Triton"
+  - "kernel"
+  - "compiler"
+  - "runtime"
+  - "memory"
+  - "KV cache"
+  - "prefill"
+  - "batching"
+  - "routing"
+  - "throughput"
+  - "latency"
+  - "communication"
+  - "bandwidth"
+  - "quantization"
+  - "speculative decoding"
+  - "checkpoint"
+  - "fault tolerance"
+  - "inference engine"
+  - "CUDA kernel"
+  - "GPU inference"
+  - "LLM inference"
+  - "GPU serving"
+  - "人工智能"
+  - "大模型"
+  - "推理"
+  - "训练"
+  - "部署"
+  - "算力"
+  - "集群"
+  - "系统"
+  - "工程"
+  - "论文"
+negative_keywords:
+  - "finance"
+  - "blockchain"
+  - "cryptocurrency"
+
+relevance_filter:
+  paper:
+    preferred_arxiv_categories:
+      - cs.DC
+      - cs.OS
+      - cs.PL
+      - cs.AR
+    broad_arxiv_categories:
+      - cs.AI
+      - cs.LG
+    category_boosts:
+      cs.DC: 4
+      cs.OS: 3
+      cs.PL: 2
+      cs.AR: 2
+    min_anchor_hits: 1
+    broad_category_min_anchor_hits: 1
+    anchor_keywords:
+      - LLM serving
+      - inference engine
+      - serving
+      - distributed training
+      - data parallel
+      - model parallel
+      - pipeline parallel
+      - cluster
+      - scheduling
+      - resource management
+      - GPU
+      - accelerator
+      - CUDA
+      - Triton
+      - kernel
+      - compiler
+      - runtime
+      - KV cache
+      - prefill
+      - decode routing
+      - batching
+      - routing
+      - throughput
+      - latency
+      - communication
+      - bandwidth
+      - quantization
+      - speculative decoding
+      - checkpoint
+      - fault tolerance
+  repo:
+    allow_keyword_fallback: true
+  blog:
+    allow_keyword_fallback: true
+
+twitter:
+  mode: apify
+  apify_actor: danek/twitter-scraper
+  tweet_language: "en"
+  query_suffix: "filter:links"
+  queries:
+    - "AI infrastructure"
+    - "LLM serving"
+    - "inference"
+    - "serving"
+    - "distributed training"
+    - "parallelism"
+    - "data parallel"
+    - "model parallel"
+    - "pipeline parallel"
+    - "cluster"
+    - "datacenter"
+    - "data center"
+    - "scheduler"
+    - "scheduling"
+    - "resource management"
+    - "GPU"
+    - "accelerator"
+    - "CUDA"
+    - "Triton"
+    - "kernel"
+    - "compiler"
+    - "runtime"
+    - "memory"
+    - "KV cache"
+    - "prefill"
+    - "batching"
+    - "routing"
+    - "throughput"
+    - "latency"
+    - "communication"
+    - "bandwidth"
+    - "quantization"
+    - "speculative decoding"
+    - "checkpoint"
+    - "fault tolerance"
+    - "inference engine"
+    - "CUDA kernel"
+    - "GPU inference"
+    - "LLM inference"
+    - "GPU serving"
+  handles:
+    - "vllm_project"
+    - "lmsysorg"
+    - "PyTorch"
+    - "NVIDIAAI"
+    - "HuggingFace"
+    - "databricks"
+    - "anyscalecompute"
+  max_results: 80
+
+rss_feeds:
+  - "https://huggingface.co/blog/feed.xml"
+  - "https://bair.berkeley.edu/blog/feed.xml"
+  - "https://blog.research.google/feeds/posts/default"
+  - "https://openai.com/news/rss.xml"
+  - "https://pytorch.org/blog/feed.xml"
+  - "https://developer.nvidia.com/blog/category/artificial-intelligence/feed/"
+  - "https://www.anyscale.com/blog/rss.xml"
+  - "https://www.databricks.com/feed"
+  - "https://lambdalabs.com/blog/rss.xml"
+rss_days: 45
+blogrxiv_days: 1
+blogrxiv_calendar_days: true
+
+github_query: "LLM serving OR inference engine OR distributed training OR CUDA kernel OR GPU inference"
+github_trending_periods:
+  - daily
+  - weekly
+github_fallback_created_days: 120
+github_days: 14
+github_top: 30
+
+hn_query: "LLM serving OR inference engine OR distributed training OR CUDA kernel OR GPU inference"
+hn_top: 50
+
+reddit_subreddits:
+  - MachineLearning
+  - LocalLLaMA
+reddit_top: 50
+
+topics:
+  - name: 训练系统
+    children:
+      - name: 并行与分布式训练
+        children:
+          - data / model / pipeline parallelism
+          - large-scale pretraining systems
+          - checkpoint / fault tolerance
+      - name: 集群调度与可靠性
+        children:
+          - cluster scheduling
+          - resource management / elasticity
+  - name: 推理系统
+    children:
+      - name: Serving 引擎
+        children:
+          - LLM serving / inference engines
+          - batching / routing / latency
+          - agent serving systems
+      - name: 内存与解码优化
+        children:
+          - KV cache / long context memory
+          - quantization / compression
+          - speculative decoding
+  - name: 编译器、内核与硬件
+    children:
+      - name: 编译器与运行时
+        children:
+          - compiler / runtime
+          - graph optimization
+      - name: GPU/加速器内核
+        children:
+          - CUDA / kernel optimization
+          - accelerator / edge inference
+  - name: 基准与观测
+    children:
+      - name: Infra 评测
+        children:
+          - AI infrastructure benchmarks
+          - profiling / observability
+
+topic_translations:
+  训练系统: Training Systems
+  并行与分布式训练: Parallel and Distributed Training
+  集群调度与可靠性: Cluster Scheduling and Reliability
+  推理系统: Inference Systems
+  Serving 引擎: Serving Engines
+  内存与解码优化: Memory and Decoding Optimization
+  编译器、内核与硬件: Compilers, Kernels, and Hardware
+  编译器与运行时: Compilers and Runtime
+  GPU/加速器内核: GPU / Accelerator Kernels
+  基准与观测: Benchmarks and Observability
+  Infra 评测: Infrastructure Evaluation
+
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
+
+ranking:
+  relevance: 0.4
+  novelty: 0.3
+  popularity: 0.2
+  code_available: 0.1
+
+quality_distill:
+  min_score: 0.18
+  buffer: 12
+  fill_quota_types:
+    - paper
+    - repo
+    - blog
+
+graph_author_enrichment_top_papers: 15
+graph_author_enrichment_timeout_seconds: 600
+graph_max_authors_per_paper: 12
+
+output:
+  top_papers: 15
+  top_repos: 5
+  top_blogs: 5
+  top_social: 5
+  analysis_buffer: 0
+  language: "中文"
+  languages:
+    - "中文"
+    - "English"

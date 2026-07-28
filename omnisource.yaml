@@ -1,0 +1,9 @@
+# Tracks that scheduled workflows should generate.
+# Keep track files under tracks/<audience>/<name>.yaml.
+active_tracks:
+  - research/ai-algorithm
+  - builder/ai-infra
+  - research/llm-agents
+  - research/robotics
+  - research/world-models
+  - venture/entrepreneur

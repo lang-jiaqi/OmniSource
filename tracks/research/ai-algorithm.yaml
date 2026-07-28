@@ -1,0 +1,166 @@
+name: ai-algorithm
+display_name: AI 算法
+display_names:
+  zh: AI 算法
+  en: AI Algorithms
+description: AI 算法、模型架构、推理、学习方法、后训练与评测。
+descriptions:
+  zh: AI 算法、模型架构、推理、学习方法、后训练与评测。
+  en: AI algorithms, model architectures, reasoning, learning methods, post-training, and evaluation.
+
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - blogrxiv
+  - github
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+hn_query: "AI algorithm OR foundation model OR reasoning model OR reinforcement learning"
+
+watchlist:
+  authors:
+    - Yoshua Bengio
+    - Chelsea Finn
+  top: 10
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://bair.berkeley.edu/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+rss_days: 21
+blogrxiv_days: 1
+blogrxiv_calendar_days: true
+
+github_query: "foundation model OR reasoning model OR multimodal model OR reinforcement learning OR machine learning algorithm"
+github_trending_periods:
+  - daily
+  - weekly
+github_fallback_created_days: 120
+github_days: 14
+github_top: 30
+
+categories:
+  - cs.AI
+  - cs.LG
+  - cs.CL
+  - cs.CV
+
+days: 3
+weekly_days: 7
+collection:
+  retry_factors: [2, 4]
+  max_days: 90
+minimum_output:
+  paper: 15
+  repo: 5
+  blog: 5
+pool_size: 450
+graph_author_enrichment_top_papers: 15
+graph_author_enrichment_timeout_seconds: 600
+graph_max_authors_per_paper: 12
+
+keywords:
+  - algorithm
+  - architecture
+  - foundation model
+  - reasoning
+  - planning
+  - reinforcement learning
+  - representation learning
+  - optimization
+  - transformer
+  - attention
+  - diffusion
+  - multimodal
+  - post-training
+  - fine-tuning
+  - benchmark
+  - evaluation
+  - agent
+  - AI
+  - 人工智能
+  - 大模型
+  - 推理
+  - 后训练
+  - 多模态
+  - 强化学习
+  - 评测
+  - 科研
+  - 论文
+  - 学术
+
+negative_keywords:
+  - finance
+  - blockchain
+  - cryptocurrency
+
+topics:
+  - name: 模型与训练方法
+    children:
+      - name: 架构设计
+        children:
+          - Transformer / attention variants
+          - diffusion / generative modeling
+          - multimodal / VLM architecture
+      - name: 学习目标与优化
+        children:
+          - representation learning
+          - optimization / training dynamics
+          - data-efficient learning
+  - name: 推理、智能体与后训练
+    children:
+      - name: 推理与规划
+        children:
+          - reasoning / planning
+          - tool use / agent workflow
+      - name: 后训练与对齐
+        children:
+          - reinforcement learning
+          - post-training / alignment data
+  - name: 评测与可靠性
+    children:
+      - name: 评测体系
+        children:
+          - evaluation / benchmarks
+          - multimodal evaluation
+      - name: 鲁棒性与泛化
+        children:
+          - robustness / generalization
+          - safety / refusal behavior
+
+topic_translations:
+  模型与训练方法: Models and Training Methods
+  架构设计: Architecture Design
+  学习目标与优化: Learning Objectives and Optimization
+  推理、智能体与后训练: Reasoning, Agents, and Post-Training
+  推理与规划: Reasoning and Planning
+  后训练与对齐: Post-Training and Alignment
+  评测与可靠性: Evaluation and Reliability
+  评测体系: Evaluation Systems
+  鲁棒性与泛化: Robustness and Generalization
+
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
+
+ranking:
+  relevance: 0.4
+  novelty: 0.3
+  popularity: 0.2
+  code_available: 0.1
+
+output:
+  top_papers: 15
+  top_repos: 5
+  top_blogs: 5
+  top_social: 5
+  analysis_buffer: 0
+  language: 中文
+  languages:
+    - 中文
+    - English

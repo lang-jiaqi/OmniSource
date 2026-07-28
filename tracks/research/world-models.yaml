@@ -1,0 +1,94 @@
+name: world-models
+display_name: "世界模型"
+display_names:
+  zh: "世界模型"
+  en: "World Models"
+description: World models, model-based RL, learned simulators, video/latent dynamics.
+
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - blogrxiv
+  - github
+  - hackernews
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+hn_query: "world models OR model-based RL OR learned simulator OR video prediction"
+
+categories:
+  - cs.LG
+  - cs.AI
+  - cs.CV
+  - cs.RO
+
+days: 7
+weekly_days: 14
+collection:
+  retry_factors: [2, 4]
+  max_days: 120
+minimum_output:
+  paper: 10
+  repo: 5
+  blog: 8
+pool_size: 600
+
+keywords:
+  - world model
+  - world models
+  - model-based
+  - latent dynamics
+  - video prediction
+  - neural simulation
+  - learned simulator
+  - dreamer
+  - predictive model
+  - environment model
+  - physical world
+  - planning
+
+negative_keywords:
+  - finance
+  - blockchain
+
+topics:
+  - model-based reinforcement learning
+  - video / generative world models
+  - latent dynamics
+  - learned simulators
+  - planning with world models
+  - world-model evaluation / benchmarks
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://bair.berkeley.edu/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+  - https://www.latent.space/feed
+  - https://www.deeplearning.ai/the-batch/feed/
+  - https://www.technologyreview.com/feed/
+rss_days: 60
+blogrxiv_days: 14
+
+github_query: "world model OR world models OR model-based RL OR JEPA"
+github_days: 30
+github_top: 30
+
+llm:
+  provider: openai_compatible
+  model: gpt-5.6-luna
+
+quality_distill:
+  min_score: 0.14
+  buffer: 6
+  fill_quota_types:
+    - paper
+    - blog
+
+output:
+  top_papers: 10
+  top_repos: 5
+  top_blogs: 8
+  language: 中文

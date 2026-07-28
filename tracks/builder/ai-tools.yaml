@@ -1,0 +1,169 @@
+name: ai-tools
+display_name: AI 工具
+display_names:
+  zh: AI 工具
+  en: AI Tools
+description: 面向开发者的 AI 工具、智能体、自动化连接和研究检索工具。
+descriptions:
+  zh: 面向开发者的 AI 工具、智能体、自动化连接和研究检索工具。
+  en: AI tools for coding, agents, automation, app building, and research.
+
+# Use the shared six-dimension tool selection used by the official website.
+tool_radar: true
+
+# Social sources are listed for customization. Add their configuration in your
+# fork before running them.
+sources:
+  - github
+  - hackernews
+  - rss
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+days: 14
+weekly_days: 7
+rss_days: 21
+
+keywords:
+  - AI tool
+  - AI tools
+  - coding agent
+  - AI coding
+  - developer tool
+  - MCP
+  - Model Context Protocol
+  - browser automation
+  - browser agent
+  - RAG
+  - AI workflow
+  - workflow automation
+  - AI agent
+  - agent framework
+  - AI app builder
+  - research assistant
+  - local LLM
+  - AI CLI
+  - copilot
+  - 人工智能工具
+  - 编程助手
+  - 智能体
+  - 自动化
+  - 工作流
+
+negative_keywords:
+  - cryptocurrency
+  - blockchain
+  - gambling
+  - sports betting
+
+github_query: "AI tool OR coding agent OR MCP OR browser automation OR RAG"
+github_trending_periods:
+  - daily
+  - weekly
+github_fallback_created_days: 180
+github_days: 30
+github_top: 50
+github_trending_top: 50
+github_search_sort: stars
+
+hn_query: "AI tool OR coding agent OR MCP OR browser automation OR RAG"
+hn_top: 50
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://openai.com/news/rss.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://blog.langchain.dev/rss/
+rss_days: 21
+
+relevance_filter:
+  repo:
+    allow_keyword_fallback: true
+  blog:
+    allow_keyword_fallback: false
+    min_anchor_hits: 1
+    anchor_keywords:
+      - AI tool
+      - AI tools
+      - coding agent
+      - developer tool
+      - MCP
+      - browser automation
+      - RAG
+      - AI workflow
+      - AI agent
+      - agent framework
+      - AI app builder
+      - research assistant
+      - local LLM
+      - copilot
+  social:
+    allow_keyword_fallback: false
+    min_anchor_hits: 1
+    anchor_keywords:
+      - AI tool
+      - coding agent
+      - MCP
+      - browser automation
+      - RAG
+      - AI workflow
+      - AI agent
+      - developer tool
+
+topics:
+  - name: 编程开发
+    children:
+      - coding agents
+      - developer tools and CLIs
+      - code review and testing
+  - name: 自动化连接
+    children:
+      - browser automation
+      - MCP and integrations
+      - agent workflows
+  - name: 应用搭建
+    children:
+      - AI app builders
+      - RAG and knowledge apps
+      - local AI applications
+  - name: 研究检索
+    children:
+      - research assistants
+      - search and discovery
+      - reading and note-taking
+
+topic_translations:
+  编程开发: Coding
+  自动化连接: Automation and Integrations
+  应用搭建: App Building
+  研究检索: Research and Discovery
+
+llm:
+  provider: openai
+  model: gpt-4.1-mini
+
+ranking:
+  relevance: 0.4
+  novelty: 0.25
+  popularity: 0.15
+  code_available: 0.2
+
+quality_distill:
+  min_score: 0.2
+  buffer: 8
+  fill_quota_types:
+    - repo
+    - blog
+    - social
+
+output:
+  top_papers: 0
+  top_repos: 10
+  top_blogs: 10
+  top_social: 5
+  analysis_buffer: 0
+  language: 中文
+  languages:
+    - 中文
+    - English

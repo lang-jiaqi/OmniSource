@@ -1,0 +1,31 @@
+[project]
+name = "omnisource"
+version = "0.1.0"
+description = "Self-hosted AI research intelligence agent — your daily AI research radar."
+requires-python = ">=3.11"
+dependencies = [
+    "arxiv>=2.1.0",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "openai>=1.40",
+    "anthropic>=0.40",
+    "feedparser>=6.0",
+    "typer>=0.12",
+    "jinja2>=3.1",
+    "pypdf>=4.0",
+    "rapidfuzz>=3.0",
+]
+
+[project.scripts]
+omnisource = "omnisource.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["omnisource"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"omnisource/taxonomies" = "omnisource/taxonomies"
+"omnisource/expert_skills" = "omnisource/expert_skills"

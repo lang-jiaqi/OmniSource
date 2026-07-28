@@ -1,0 +1,183 @@
+# Copy this file to tracks/builder/my-ai-radar.yaml, then run:
+#   uv run omnisource run --track builder/my-ai-radar --no-llm --no-memory --days 7
+#
+# The file name under tracks/ is the CLI track id. Keep `name` the same as the
+# copied file name without ".yaml". Choose research/, venture/, or builder/
+# according to the audience for your radar.
+
+name: my-ai-radar
+display_name: My AI Radar
+display_names:
+  zh: 我的 AI 雷达
+  en: My AI Radar
+description: A personal research radar for the papers, repos, blogs, and X accounts I care about.
+descriptions:
+  zh: 关注我关心的论文、开源项目、实验室博客和 X 账号的个人科研雷达。
+  en: A personal research radar for the papers, repos, blogs, and X accounts I care about.
+
+# Remove any source you do not want. For example, a paper-only radar can keep
+# just arxiv + hf_papers; an "experts on X" radar can keep just twitter.
+sources:
+  - arxiv
+  - hf_papers
+  - rss
+  - github
+  - twitter
+  - xiaohongshu
+  - zhihu
+
+# arXiv categories. Common AI choices: cs.AI, cs.LG, cs.CL, cs.CV.
+# AI infrastructure usually benefits from cs.DC, cs.OS, cs.PL, cs.AR.
+categories:
+  - cs.AI
+  - cs.LG
+  - cs.CL
+
+days: 3
+weekly_days: 7
+pool_size: 450
+
+# Keywords are the first-pass taste filter. Use phrases your target reader
+# would actually search for.
+keywords:
+  - LLM agents
+  - reasoning
+  - tool use
+  - inference optimization
+  - post-training
+  - benchmark
+
+negative_keywords:
+  - finance
+  - blockchain
+  - cryptocurrency
+
+# Optional deterministic guardrails before the LLM. Keep this if your arXiv
+# categories are broad and you want stronger track fit.
+relevance_filter:
+  paper:
+    preferred_arxiv_categories:
+      - cs.AI
+      - cs.LG
+      - cs.CL
+    broad_arxiv_categories:
+      - cs.CV
+    min_anchor_hits: 1
+    broad_category_min_anchor_hits: 1
+    anchor_keywords:
+      - agent
+      - reasoning
+      - tool use
+      - post-training
+      - inference
+      - benchmark
+  repo:
+    allow_keyword_fallback: true
+  blog:
+    allow_keyword_fallback: true
+
+# X/Twitter via Apify. Requires APIFY_TOKEN.
+#
+# - queries: broad topic search.
+# - handles: exact accounts, translated to from:<handle>.
+# - If you only want fixed experts' X posts, set queries: [] and fill handles.
+# - If both are set, OmniSource fetches both broad keyword search and these
+#   accounts, then folds tweets that link papers/repos into those items' buzz.
+twitter:
+  mode: apify
+  apify_actor: danek/twitter-scraper
+  tweet_language: en
+  query_suffix: "filter:links"
+  queries:
+    - "LLM agents"
+    - "reasoning model"
+    - "inference optimization"
+  handles:
+    - karpathy
+    - swyx
+    - ClementDelangue
+    - OpenAI
+    - GoogleDeepMind
+  max_results: 80
+
+# Paper authors you explicitly follow. This is separate from X handles: it
+# watches paper author names and can lift their papers into a watchlist section.
+watchlist:
+  authors:
+    - Yoshua Bengio
+    - Chelsea Finn
+  top: 10
+
+rss_feeds:
+  - https://huggingface.co/blog/feed.xml
+  - https://blog.research.google/feeds/posts/default
+  - https://openai.com/news/rss.xml
+rss_days: 21
+
+github_query: "LLM agents OR reasoning model OR inference optimization OR post-training"
+github_trending_periods:
+  - daily
+  - weekly
+github_fallback_created_days: 120
+github_days: 14
+github_top: 30
+
+# Reports group items by the leaf topic selected by the LLM.
+topics:
+  - name: Agents and Reasoning
+    children:
+      - name: Agent Workflows
+        children:
+          - tool use / workflow orchestration
+          - long-horizon planning
+      - name: Reasoning Methods
+        children:
+          - reasoning / planning
+          - verification / self-correction
+  - name: Training and Evaluation
+    children:
+      - name: Post-Training
+        children:
+          - reinforcement learning
+          - preference optimization
+      - name: Benchmarks
+        children:
+          - agent evaluation
+          - multimodal evaluation
+
+topic_translations:
+  Agents and Reasoning: 智能体与推理
+  Agent Workflows: 智能体工作流
+  Reasoning Methods: 推理方法
+  Training and Evaluation: 训练与评测
+  Post-Training: 后训练
+  Benchmarks: 基准评测
+
+llm:
+  provider: openai
+  model: gpt-4o-mini
+
+ranking:
+  relevance: 0.4
+  novelty: 0.3
+  popularity: 0.2
+  code_available: 0.1
+
+quality_distill:
+  min_score: 0.18
+  buffer: 12
+  fill_quota_types:
+    - paper
+    - repo
+    - blog
+
+graph_author_enrichment_top_papers: 15
+
+output:
+  top_papers: 15
+  top_repos: 5
+  top_blogs: 5
+  language: 中文
+  languages:
+    - 中文
+    - English

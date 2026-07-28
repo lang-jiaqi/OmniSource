@@ -1,0 +1,52 @@
+{% macro render_sections(sections, labels) -%}
+{% for section in sections %}
+# {{ section.heading }}
+
+{% for group in section.groups %}
+{% if group.topic %}### {{ group.topic }}
+
+{% endif %}
+{% for item in group.entries %}
+## {{ item.n }}. {{ item.title }}
+
+{% if item.authors %}- **{{ labels.authors }}:** {{ item.authors }}
+{% endif %}
+- **{{ item.meta }}**
+{% if item.source_signal_line %}- **{{ labels.source_signal }}:** {{ item.source_signal_line }}
+{% endif %}
+{% if item.link_line %}- {{ item.link_line }}
+{% endif %}
+
+{% if item.why_it_matters %}**{{ labels.why }}:** {{ item.why_it_matters }}
+
+{% endif %}
+{% if item.method_brief %}<details>
+<summary>{{ labels.method_brief }}</summary>
+
+{% if item.method_brief.problem %}- **{{ labels.method_problem }}:** {{ item.method_brief.problem }}
+{% endif %}
+{% if item.method_brief.method %}- **{{ labels.method_method }}:** {{ item.method_brief.method }}
+{% endif %}
+{% if item.method_brief.difference %}- **{{ labels.method_difference }}:** {{ item.method_brief.difference }}
+{% endif %}
+{% if item.method_brief.evidence %}- **{{ labels.method_evidence }}:** {{ item.method_brief.evidence }}
+{% endif %}
+
+</details>
+
+{% endif %}
+{% if item.abstract %}<details>
+<summary>{{ labels.abstract }}</summary>
+
+{{ item.abstract }}
+
+</details>
+
+{% endif %}
+{% if item.summary %}{{ item.summary }}
+
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{%- endmacro %}

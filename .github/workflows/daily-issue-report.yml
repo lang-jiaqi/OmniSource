@@ -1,0 +1,68 @@
+name: Daily GitHub Issue Report
+
+concurrency:
+  group: omnisource-reports
+  cancel-in-progress: false
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Optional source lookback window"
+        required: false
+        type: number
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Restore report memory
+        uses: actions/cache/restore@v4
+        with:
+          path: data/memory.db
+          key: omnisource-memory-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            omnisource-memory-${{ github.ref_name }}-
+      - name: Generate one Issue per active track
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_COMPATIBLE_API_KEY: ${{ secrets.OPENAI_COMPATIBLE_API_KEY }}
+          OPENAI_COMPATIBLE_BASE_URL: ${{ secrets.OPENAI_COMPATIBLE_BASE_URL }}
+          OPENAI_COMPATIBLE_TIMEOUT_SECONDS: ${{ secrets.OPENAI_COMPATIBLE_TIMEOUT_SECONDS }}
+          OPENAI_COMPATIBLE_MAX_RETRIES: ${{ secrets.OPENAI_COMPATIBLE_MAX_RETRIES }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OMNISOURCE_REQUIRE_LLM: "1"
+          DAYS_OVERRIDE: ${{ inputs.days || '' }}
+        run: |
+          mkdir -p data
+          touch data/memory.db
+          args=()
+          if [ -n "$DAYS_OVERRIDE" ]; then args+=(--days "$DAYS_OVERRIDE"); fi
+          mapfile -t tracks < <(uv run omnisource active-tracks)
+          failed=0
+          for track in "${tracks[@]}"; do
+            if ! uv run omnisource run --track "$track" "${args[@]}"; then
+              failed=1
+              echo "::error::Track failed: $track"
+            fi
+          done
+          exit "$failed"
+      - name: Save report memory
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/memory.db
+          key: omnisource-memory-${{ github.ref_name }}-${{ github.run_id }}

@@ -1,0 +1,6 @@
+{% from "_sections.md.j2" import render_sections -%}
+# OmniSource {{ period }} — {{ track_name }}
+
+*{{ date }} · {{ total }} {{ labels.signals }} · {{ labels.sources }}: {{ sources }}*
+
+{{ render_sections(sections, labels) }}
