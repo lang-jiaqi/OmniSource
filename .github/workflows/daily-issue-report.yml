@@ -21,6 +21,9 @@ permissions:
 jobs:
   report:
     runs-on: ubuntu-latest
+    env:
+      OMNISOURCE_ISSUE_REPOSITORY: ${{ github.repository == 'lang-jiaqi/OmniSource' && 'lang-jiaqi/OmniSource-workspace' || '' }}
+      OMNISOURCE_ISSUE_TOKEN: ${{ github.repository == 'lang-jiaqi/OmniSource' && secrets.OMNISOURCE_ISSUE_TOKEN || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
