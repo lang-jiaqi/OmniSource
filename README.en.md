@@ -383,10 +383,12 @@ Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, w
 
 ## 🌍 Independent World Model Ventures
 
-The authors of this project are also independently exploring startup opportunities in the world model space.
+## Interested in World Models?
 
-Wangbo Zhao (Google Scholar, email) is preparing an early-stage startup focused on world models and the infrastructure needed to build them. The project is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
+The authors of this project are also independently exploring entrepreneurial opportunities in the world-model space.
 
-Pengfei Zhou ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is building systems with general intelligence capabilities that can understand and predict human environments and the real world, and ultimately interact with them. More information: company website.
+**Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), email) is currently building an early-stage startup focused on world models and the infrastructure required to develop and scale them. The company is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
 
-The ventures described above are independent of this project and are not affiliated with one another.
+**Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is committed to building systems with general-purpose intelligence that can understand, predict, and ultimately interact with human environments and the real world. For more information, please visit the [company website](https://www.cardinal-agi.com/).
+
+These ventures are independent of this project and of each other.
