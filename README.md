@@ -141,7 +141,7 @@ llm:
   model: gemini-2.5-flash       # Or qwen-plus or another supported model
 ~~~
 
-The secret name must be `OPENAI_COMPATIBLE_API_KEY`; use the provider's documentation for the model name and Base URL. GitHub Actions automatically provides the `GITHUB_TOKEN` needed to create Issues.
+The secret name must be `OPENAI_COMPATIBLE_API_KEY`; use the provider's documentation for the model name and Base URL. GitHub Actions automatically provides the `GITHUB_TOKEN` needed to create Issues in your own fork. The upstream repository uses `OMNISOURCE_ISSUE_TOKEN` to publish reports to `lang-jiaqi/OmniSource-workspace`.
 
 If a track uses Anthropic, add `ANTHROPIC_API_KEY`. If it uses Reddit's OAuth mode, also add `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET`. These are optional; sources you do not use need no configuration.
 
@@ -358,7 +358,7 @@ Usually you only need to edit `tracks/<audience>/` and `omnisource.yaml`; modify
 Check two things:
 
 1. **Issues** is enabled for the repository.
-2. The workflow file retains the permissions needed to create Issues. The current configuration uses the `GITHUB_TOKEN` automatically provided by GitHub Actions.
+2. The workflow file retains the permissions needed to create Issues. Forks use the `GITHUB_TOKEN` automatically provided by GitHub Actions; the upstream repository also needs the `OMNISOURCE_ISSUE_TOKEN` Secret for its separate Issue destination.
 
 ### 🔐 `invalid_api_key` error
 

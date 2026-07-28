@@ -24,6 +24,11 @@ class GitHubIssuePublisher(Publisher):
         if target_repo:
             repo = target_repo
             token = os.environ.get("OMNISOURCE_ISSUE_TOKEN")
+            if not token:
+                raise RuntimeError(
+                    f"github_issue: target repository {repo} is configured but "
+                    "OMNISOURCE_ISSUE_TOKEN is missing"
+                )
         else:
             repo = os.environ.get("GITHUB_REPOSITORY")  # "owner/name"
             token = os.environ.get("GITHUB_TOKEN")
@@ -41,6 +46,6 @@ class GitHubIssuePublisher(Publisher):
             timeout=30,
         )
         if resp.status_code >= 300:
-            print(f"  github_issue: failed ({resp.status_code}) {resp.text[:200]}")
-            return
+            detail = resp.text[:200]
+            raise RuntimeError(f"github_issue: failed ({resp.status_code}) {detail}")
         print(f"  github_issue: {resp.json().get('html_url')}")

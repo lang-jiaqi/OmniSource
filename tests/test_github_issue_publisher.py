@@ -59,6 +59,40 @@ class GitHubIssuePublisherTests(unittest.TestCase):
         self.assertEqual(post.call_args.args[0], "https://api.github.com/repos/someone/OmniSource/issues")
         self.assertEqual(post.call_args.kwargs["headers"]["Authorization"], "Bearer fork-token")
 
+    @patch("omnisource.publishers.github_issue.requests.post")
+    def test_missing_override_token_fails_instead_of_falling_back(self, post) -> None:
+        with patch.dict(
+            os.environ,
+            {
+                "OMNISOURCE_ISSUE_REPOSITORY": "lang-jiaqi/OmniSource-workspace",
+                "OMNISOURCE_ISSUE_TOKEN": "",
+                "GITHUB_REPOSITORY": "lang-jiaqi/OmniSource",
+                "GITHUB_TOKEN": "default-token",
+            },
+            clear=False,
+        ):
+            with self.assertRaisesRegex(RuntimeError, "OMNISOURCE_ISSUE_TOKEN is missing"):
+                GitHubIssuePublisher().publish(report())
+
+        post.assert_not_called()
+
+    @patch("omnisource.publishers.github_issue.requests.post")
+    def test_api_publish_failure_fails_the_track(self, post) -> None:
+        post.return_value.status_code = 403
+        post.return_value.text = '{"message":"Resource not accessible by integration"}'
+        with patch.dict(
+            os.environ,
+            {
+                "OMNISOURCE_ISSUE_REPOSITORY": "lang-jiaqi/OmniSource-workspace",
+                "OMNISOURCE_ISSUE_TOKEN": "workspace-token",
+                "GITHUB_REPOSITORY": "lang-jiaqi/OmniSource",
+                "GITHUB_TOKEN": "default-token",
+            },
+            clear=False,
+        ):
+            with self.assertRaisesRegex(RuntimeError, "403"):
+                GitHubIssuePublisher().publish(report())
+
 
 if __name__ == "__main__":
     unittest.main()

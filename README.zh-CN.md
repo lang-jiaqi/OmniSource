@@ -141,7 +141,7 @@ llm:
   model: gemini-2.5-flash       # 或 qwen-plus、服务商支持的其他模型
 ~~~
 
-密钥名称固定使用 `OPENAI_COMPATIBLE_API_KEY`；模型名和 Base URL 以服务商文档为准。GitHub Actions 创建 Issue 所需的 `GITHUB_TOKEN` 会自动提供。
+密钥名称固定使用 `OPENAI_COMPATIBLE_API_KEY`；模型名和 Base URL 以服务商文档为准。GitHub Actions 会自动提供你自己的 Fork 创建 Issue 所需的 `GITHUB_TOKEN`。主仓库使用 `OMNISOURCE_ISSUE_TOKEN` 将报告发布到 `lang-jiaqi/OmniSource-workspace`。
 
 如果 track 使用 Anthropic，添加 `ANTHROPIC_API_KEY`；如果使用 Reddit 的 OAuth 模式，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET`。这些都是可选项，不用的来源不需要配置。
 
@@ -367,7 +367,7 @@ tests/                   开源核心测试
 确认两件事：
 
 1. 仓库的 **Issues** 已开启。
-2. workflow 文件中保留了创建 Issue 所需的权限。当前配置使用 GitHub Actions 自动提供的 GITHUB_TOKEN。
+2. workflow 文件中保留了创建 Issue 所需的权限。Fork 使用 GitHub Actions 自动提供的 `GITHUB_TOKEN`；主仓库还需要配置用于独立 Issue 目标仓库的 `OMNISOURCE_ISSUE_TOKEN` Secret。
 
 ### 🔐 报错 invalid_api_key
 

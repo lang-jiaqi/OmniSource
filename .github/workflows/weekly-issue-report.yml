@@ -16,9 +16,6 @@ permissions:
 jobs:
   report:
     runs-on: ubuntu-latest
-    env:
-      OMNISOURCE_ISSUE_REPOSITORY: ${{ github.repository == 'lang-jiaqi/OmniSource' && 'lang-jiaqi/OmniSource-workspace' || '' }}
-      OMNISOURCE_ISSUE_TOKEN: ${{ github.repository == 'lang-jiaqi/OmniSource' && secrets.OMNISOURCE_ISSUE_TOKEN || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -42,6 +39,8 @@ jobs:
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OMNISOURCE_ISSUE_REPOSITORY: ${{ github.repository == 'lang-jiaqi/OmniSource' && 'lang-jiaqi/OmniSource-workspace' || '' }}
+          OMNISOURCE_ISSUE_TOKEN: ${{ github.repository == 'lang-jiaqi/OmniSource' && secrets.OMNISOURCE_ISSUE_TOKEN || '' }}
           OMNISOURCE_REQUIRE_LLM: "1"
         run: |
           mkdir -p data
