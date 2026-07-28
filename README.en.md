@@ -380,3 +380,13 @@ Forks, tracks, sources, and publishers welcome. A good track is often a research
 Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, weidong tang
 
 *Corresponding author: Jiaqi Lang · National University of Singapore (NUS) · lang.jiaqi@u.nus.edu*
+
+## 🌍 Independent World Model Ventures
+
+The authors of this project are also independently exploring startup opportunities in the world model space.
+
+Wangbo Zhao (Google Scholar, email) is preparing an early-stage startup focused on world models and the infrastructure needed to build them. The project is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
+
+Pengfei Zhou ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is building systems with general intelligence capabilities that can understand and predict human environments and the real world, and ultimately interact with them. More information: company website.
+
+The ventures described above are independent of this project and are not affiliated with one another.
