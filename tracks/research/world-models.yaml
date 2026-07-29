@@ -67,7 +67,6 @@ rss_feeds:
   - https://blog.research.google/feeds/posts/default
   - https://openai.com/news/rss.xml
   - https://www.latent.space/feed
-  - https://www.deeplearning.ai/the-batch/feed/
   - https://www.technologyreview.com/feed/
 rss_days: 60
 blogrxiv_days: 14
@@ -77,8 +76,8 @@ github_days: 30
 github_top: 30
 
 llm:
-  provider: openai_compatible
-  model: gpt-5.6-luna
+  provider: openai
+  model: gpt-4.1-mini
 
 quality_distill:
   min_score: 0.14

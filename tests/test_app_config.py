@@ -5,10 +5,37 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from omnisource import app_config
+from omnisource import app_config, config
 
 
 class AppConfigTests(unittest.TestCase):
+    def test_installed_package_uses_bundled_tracks_and_writable_cwd(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            package_dir = root / "site-packages" / "omnisource"
+            bundled_tracks = package_dir / "tracks"
+            bundled_tracks.mkdir(parents=True)
+            workspace = root / "workspace"
+            workspace.mkdir()
+
+            runtime_root, tracks_dir = config._resolve_runtime_paths(package_dir, cwd=workspace)
+
+            self.assertEqual(runtime_root, workspace)
+            self.assertEqual(tracks_dir, bundled_tracks)
+
+    def test_source_checkout_prefers_repository_tracks(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            source_root = Path(tmp)
+            package_dir = source_root / "omnisource"
+            package_dir.mkdir()
+            source_tracks = source_root / "tracks"
+            source_tracks.mkdir()
+
+            runtime_root, tracks_dir = config._resolve_runtime_paths(package_dir)
+
+            self.assertEqual(runtime_root, source_root)
+            self.assertEqual(tracks_dir, source_tracks)
+
     def test_active_tracks_reads_root_config(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "omnisource.yaml"

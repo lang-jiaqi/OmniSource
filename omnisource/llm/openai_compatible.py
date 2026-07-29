@@ -8,12 +8,49 @@ official OpenAI provider.
 from __future__ import annotations
 
 import os
+from collections.abc import Mapping
 
 from openai import OpenAI
 
 from .base import LLMProvider, parse_json
 
 DEFAULT_MODEL = "gpt-5.5"
+
+
+def _response_content(response: object) -> str:
+    """Extract assistant text from common OpenAI-compatible response shapes."""
+    if isinstance(response, str):
+        return response
+    if isinstance(response, bytes):
+        return response.decode("utf-8")
+
+    choices = response.get("choices") if isinstance(response, Mapping) else getattr(response, "choices", None)
+    if not isinstance(choices, (list, tuple)) or not choices:
+        raise RuntimeError(
+            "OpenAI-compatible response has no choices; "
+            f"received {type(response).__name__}"
+        )
+
+    choice = choices[0]
+    message = choice.get("message") if isinstance(choice, Mapping) else getattr(choice, "message", None)
+    content = message.get("content") if isinstance(message, Mapping) else getattr(message, "content", None)
+    if isinstance(content, str):
+        return content
+    if isinstance(content, bytes):
+        return content.decode("utf-8")
+    if isinstance(content, (list, tuple)):
+        parts: list[str] = []
+        for part in content:
+            text = part.get("text") if isinstance(part, Mapping) else getattr(part, "text", None)
+            if isinstance(text, str):
+                parts.append(text)
+        if parts:
+            return "".join(parts)
+
+    raise RuntimeError(
+        "OpenAI-compatible response has no text content; "
+        f"received {type(content).__name__}"
+    )
 
 
 def _env_float(name: str, default: float) -> float:
@@ -65,4 +102,4 @@ class OpenAICompatibleProvider(LLMProvider):
             ],
             temperature=0.2,
         )
-        return parse_json(resp.choices[0].message.content)
+        return parse_json(_response_content(resp))

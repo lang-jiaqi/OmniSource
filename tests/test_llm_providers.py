@@ -1,12 +1,22 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock
 from unittest.mock import patch
 
 from omnisource.llm import OpenAICompatibleProvider, get_provider
 
 
 class LLMProviderRegistryTests(unittest.TestCase):
+    @staticmethod
+    def _provider_with_response(response: object) -> OpenAICompatibleProvider:
+        provider = object.__new__(OpenAICompatibleProvider)
+        provider.model = "test-model"
+        provider.client = Mock()
+        provider.client.chat.completions.create.return_value = response
+        return provider
+
     def test_openai_compatible_provider_uses_dedicated_env_vars(self) -> None:
         with patch.dict(
             "os.environ",
@@ -34,6 +44,26 @@ class LLMProviderRegistryTests(unittest.TestCase):
         with patch.dict("os.environ", {"OPENAI_COMPATIBLE_API_KEY": "test-key"}, clear=True):
             with self.assertRaisesRegex(RuntimeError, "OPENAI_COMPATIBLE_BASE_URL"):
                 OpenAICompatibleProvider("gpt-5.5")
+
+    def test_openai_compatible_provider_accepts_sdk_dict_and_string_responses(self) -> None:
+        expected = {"topic": "agents"}
+        responses = (
+            SimpleNamespace(
+                choices=[SimpleNamespace(message=SimpleNamespace(content='{"topic":"agents"}'))]
+            ),
+            {"choices": [{"message": {"content": '{"topic":"agents"}'}}]},
+            '{"topic":"agents"}',
+        )
+        for response in responses:
+            with self.subTest(response_type=type(response).__name__):
+                provider = self._provider_with_response(response)
+                self.assertEqual(provider.complete_json("system", "user"), expected)
+
+    def test_openai_compatible_provider_rejects_malformed_response_clearly(self) -> None:
+        provider = self._provider_with_response({"result": "missing choices"})
+
+        with self.assertRaisesRegex(RuntimeError, "response has no choices"):
+            provider.complete_json("system", "user")
 
 
 if __name__ == "__main__":

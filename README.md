@@ -112,6 +112,9 @@ Set-Location OmniSource
 | 信息收集、摘要、日常报告 | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
 | 更强的推理、筛选和判断 | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
 
+公开内置 track 默认使用 OpenAI `gpt-4.1-mini`。如果使用 Gemini、Qwen
+或自建网关，请同时修改 track 中的 `provider`、`model`，并配置对应的兼容接口。
+
 OpenAI 官方接口：
 
 ~~~

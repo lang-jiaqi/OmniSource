@@ -10,9 +10,18 @@ from pathlib import Path
 
 import yaml
 
-from .config import DEFAULT_TRACK, ROOT, track_path
+from .config import BUNDLED_CONFIG_PATH, DEFAULT_TRACK, ROOT, track_path
 
-APP_CONFIG_PATH = Path(os.environ.get("OMNISOURCE_CONFIG_PATH", ROOT / "omnisource.yaml"))
+
+def _default_config_path() -> Path:
+    explicit = os.environ.get("OMNISOURCE_CONFIG_PATH")
+    if explicit:
+        return Path(explicit)
+    workspace_config = ROOT / "omnisource.yaml"
+    return workspace_config if workspace_config.exists() else BUNDLED_CONFIG_PATH
+
+
+APP_CONFIG_PATH = _default_config_path()
 DEFAULT_ACTIVE_TRACKS = ("research/ai-algorithm", "builder/ai-infra")
 
 

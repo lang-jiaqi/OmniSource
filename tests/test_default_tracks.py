@@ -84,13 +84,13 @@ class DefaultTrackTests(unittest.TestCase):
         self.assertIn("blog", infra["quality_distill"]["fill_quota_types"])
         self.assertGreaterEqual(infra["rss_days"], 45)
 
-    def test_builtin_tracks_use_the_shared_compatible_gateway(self) -> None:
+    def test_builtin_tracks_use_a_public_openai_default(self) -> None:
         with (Path(__file__).resolve().parents[1] / "omnisource.yaml").open(encoding="utf-8") as handle:
             app = yaml.safe_load(handle)
         for name in track_references():
             track = self._load_track(name)
-            self.assertEqual(track["llm"]["provider"], "openai_compatible", name)
-            self.assertEqual(track["llm"]["model"], "gpt-5.6-luna", name)
+            self.assertEqual(track["llm"]["provider"], "openai", name)
+            self.assertEqual(track["llm"]["model"], "gpt-4.1-mini", name)
 
         entrepreneur = self._load_track("venture/entrepreneur")
         self.assertIn("venture/entrepreneur", app["active_tracks"])

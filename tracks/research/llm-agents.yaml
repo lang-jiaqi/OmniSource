@@ -94,8 +94,8 @@ topics:
 # LLM analyst: judges semantic relevance and explains why each item matters.
 # Only a small buffer above each section's quota is sent to the LLM.
 llm:
-  provider: openai_compatible
-  model: gpt-5.6-luna
+  provider: openai
+  model: gpt-4.1-mini
 
 # How much each component counts toward an item's final score. Weights are
 # normalized signals (popularity is scaled within each section).

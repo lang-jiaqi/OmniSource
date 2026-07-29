@@ -4,8 +4,19 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-TRACKS_DIR = ROOT / "tracks"
+
+def _resolve_runtime_paths(package_dir: Path, *, cwd: Path | None = None) -> tuple[Path, Path]:
+    """Return writable workspace root and the available built-in track directory."""
+    source_root = package_dir.parent
+    source_tracks = source_root / "tracks"
+    if source_tracks.is_dir():
+        return source_root, source_tracks
+    return cwd or Path.cwd(), package_dir / "tracks"
+
+
+PACKAGE_DIR = Path(__file__).resolve().parent
+ROOT, TRACKS_DIR = _resolve_runtime_paths(PACKAGE_DIR)
+BUNDLED_CONFIG_PATH = PACKAGE_DIR / "omnisource.yaml"
 # Keep reusable core outputs beside the public package. The private official
 # site can redirect generated data through environment variables.
 REPORTS_DIR = Path(os.environ.get("OMNISOURCE_REPORTS_DIR", ROOT / "reports"))

@@ -287,8 +287,8 @@ topic_translations:
   Infra 评测: Infrastructure Evaluation
 
 llm:
-  provider: openai_compatible
-  model: gpt-5.6-luna
+  provider: openai
+  model: gpt-4.1-mini
 
 ranking:
   relevance: 0.4

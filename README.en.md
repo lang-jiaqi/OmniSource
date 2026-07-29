@@ -144,6 +144,10 @@ Recommended model choices:
 | Fast collection notes and summaries | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
 | Stronger reasoning and ranking | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
 
+The built-in public tracks default to OpenAI `gpt-4.1-mini`. To use Gemini,
+Qwen, or a self-managed gateway, update both `provider` and `model` in the track
+and configure the matching compatible endpoint.
+
 OpenAI uses `OPENAI_API_KEY` and `provider: openai`. Gemini, Qwen, and gateways
 use `OPENAI_COMPATIBLE_API_KEY` / `OPENAI_COMPATIBLE_BASE_URL` and
 `provider: openai_compatible`; set `model` to the name supported by that service.

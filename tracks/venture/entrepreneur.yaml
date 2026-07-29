@@ -33,7 +33,6 @@ rss_feeds:
   - https://sifted.eu/feed
   - https://tech.eu/feed/
   - https://www.eu-startups.com/feed/
-  - https://www.finsmes.com/feed
   - https://techfundingnews.com/feed/
   - https://www.startupdaily.net/feed/
   - https://www.startuphub.ai/feed/
@@ -44,8 +43,6 @@ rss_feeds:
   - https://www.theverge.com/rss/ai-artificial-intelligence/index.xml
   - https://www.latent.space/feed
   # Founder, operator, and early-team reporting
-  - https://a16z.com/feed/
-  - https://review.firstround.com/feed.xml
 
 # Hacker News is used only as a secondary discovery source for founder,
 # funding, launch, and developer-tool discussions. It is not the main source
@@ -186,8 +183,8 @@ topic_translations:
   市场: Market
 
 llm:
-  provider: openai_compatible
-  model: gpt-5.6-luna
+  provider: openai
+  model: gpt-4.1-mini
 review_distill: false
 enrich_openalex: false
 graphs: false
