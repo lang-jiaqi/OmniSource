@@ -75,24 +75,16 @@ Key idea: Compress and tier older token cache entries to reduce GPU memory use w
 
 Goal: see your first report in about five minutes.
 
-There are two ways to use the repository:
+Choose the path that matches what you want to do:
 
 | Path | Best for | What you do |
 |---|---|---|
-| **Fast path** | First-time users | Keep an existing track and run GitHub Actions |
-| **Custom path** | Personalized reading | Copy a track, edit its YAML, then add it to `active_tracks` |
+| **Download the Release** | Quickly try or use a built-in track | Generate local Markdown and JSONL reports, with or without LLM analysis |
+| **Fork the repository** | Customize tracks, schedule runs, or publish GitHub Issues | Own the configuration, Actions workflows, and report memory |
 
-#### Step 0 · Prepare the environment
+### Path A · Download the Release and run locally
 
-Check the terminal tools:
-
-```bash
-python3 --version   # 3.11+
-uv --version
-git --version
-```
-
-If `uv` is missing:
+You need Python 3.11+ and `uv`. If `uv` is missing:
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -104,15 +96,67 @@ Windows PowerShell:
 irm https://astral.sh/uv/install.ps1 | iex
 ```
 
-You also need a GitHub account to fork the repository and receive Issues.
-
-#### Step 1 · Clone
+Install the `v0.1.1` wheel using either command:
 
 ```bash
-git clone https://github.com/lang-jiaqi/OmniSource && cd OmniSource
+# Recommended: install OmniSource as an isolated CLI tool
+uv tool install https://github.com/lang-jiaqi/OmniSource/releases/download/v0.1.1/omnisource-0.1.1-py3-none-any.whl
+
+# Or install it inside an already activated virtual environment
+python -m pip install https://github.com/lang-jiaqi/OmniSource/releases/download/v0.1.1/omnisource-0.1.1-py3-none-any.whl
 ```
 
-#### Step 2 · Preview collection, no key required
+If `uv` reports that `omnisource` is not on `PATH`, run `uv tool update-shell`
+and reopen the terminal.
+
+List the built-in tracks, then run a preview without an API key:
+
+**macOS / Linux**
+
+```bash
+mkdir omnisource-run && cd omnisource-run
+omnisource active-tracks
+omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
+```
+
+**Windows PowerShell**
+
+```powershell
+New-Item -ItemType Directory -Force omnisource-run
+Set-Location omnisource-run
+omnisource active-tracks
+omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
+```
+
+Reports are written to `reports/` in the current directory. The Release includes
+full LLM support. Set the key required by the default OpenAI track and remove
+`--no-llm`. Create `.env` in the current directory:
+
+```dotenv
+OPENAI_API_KEY=your_OpenAI_API_key
+```
+
+Then run:
+
+```bash
+omnisource run --track research/ai-algorithm
+```
+
+Use this path for built-in tracks. To edit tracks, use GitHub Actions, or schedule
+Issue reports, follow the Fork path below.
+
+### Path B · Fork, customize, and schedule reports
+
+You need a GitHub account and Git; local runs also require Python 3.11+ and `uv`.
+Fork the repository, then enable **Issues** and **Actions** in your fork.
+
+#### B1 · Clone your fork
+
+```bash
+git clone https://github.com/YOUR_USERNAME/OmniSource.git && cd OmniSource
+```
+
+#### B2 · Preview collection, no key required
 
 ```bash
 uv run omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
@@ -126,7 +170,7 @@ Outputs:
 
 `--no-llm` skips "why it matters / key idea"; `--no-memory` prevents local tests from marking items as already reported.
 
-#### Step 3 · Add model-written notes
+#### B3 · Add model-written notes
 
 ```bash
 cp .env.example .env
@@ -162,7 +206,7 @@ The main DIY research example is `research/ai-algorithm`; the public developer
 example is [`builder/ai-tools.yaml`](tracks/builder/ai-tools.yaml). The official
 website's AI-tool radar remains a separate, richer weekly view.
 
-#### Step 4 · Run GitHub Issue reports automatically
+#### B4 · Run GitHub Issue reports automatically
 
 After forking, configure GitHub Actions:
 

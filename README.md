@@ -61,17 +61,16 @@
 
 ## 🚀 快速开始
 
-### Step 0 · 🧰 准备环境
+先根据你的目的选择入口：
 
-在终端确认环境：
+| 方式 | 适合谁 | 结果 |
+|---|---|---|
+| **下载 Release** | 想快速体验、直接使用内置 track | 在本地生成 Markdown 和 JSONL 报告，支持完整 LLM 分析 |
+| **Fork 仓库** | 想修改关注方向、定时运行或生成 GitHub Issues | 获得自己的配置、Actions 和长期记忆 |
 
-```bash
-python3 --version   # 需要 3.11+
-uv --version
-git --version
-```
+### 方式 A · 下载 Release，直接体验
 
-如果没有 `uv`，安装：
+需要 Python 3.11+ 和 `uv`。如果没有 `uv`：
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -83,9 +82,60 @@ Windows PowerShell：
 irm https://astral.sh/uv/install.ps1 | iex
 ```
 
-另外需要一个 GitHub 账号，用来 Fork 仓库和接收 Issues。
+安装 `v0.1.1` wheel（二选一）：
 
-### Step 1 · 🍴 Fork 仓库
+```bash
+# 推荐：作为独立 CLI 安装
+uv tool install https://github.com/lang-jiaqi/OmniSource/releases/download/v0.1.1/omnisource-0.1.1-py3-none-any.whl
+
+# 或者：在已经激活的虚拟环境中安装
+python -m pip install https://github.com/lang-jiaqi/OmniSource/releases/download/v0.1.1/omnisource-0.1.1-py3-none-any.whl
+```
+
+如果使用 `uv` 后终端提示找不到 `omnisource`，运行 `uv tool update-shell`，
+然后重新打开终端。
+
+先查看内置 track，再做一次不调用模型的预览：
+
+**macOS / Linux**
+
+```bash
+mkdir omnisource-run && cd omnisource-run
+omnisource active-tracks
+omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
+```
+
+**Windows PowerShell**
+
+```powershell
+New-Item -ItemType Directory -Force omnisource-run
+Set-Location omnisource-run
+omnisource active-tracks
+omnisource run --track research/ai-algorithm --no-llm --no-memory --days 7
+```
+
+报告会写入当前目录的 `reports/`。Release 完整支持 LLM；配置默认 OpenAI
+track 所需的 Key 后，去掉 `--no-llm` 即可。在当前目录新建 `.env`：
+
+```dotenv
+OPENAI_API_KEY=你的_OpenAI_API_Key
+```
+
+然后运行：
+
+```bash
+omnisource run --track research/ai-algorithm
+```
+
+这条路径适合使用内置 track。要修改 track、接入 GitHub Actions 或定时生成
+Issues，请使用下面的 Fork 路径。
+
+### 方式 B · Fork 仓库，自定义并长期运行
+
+需要 GitHub 账号和 Git；如需本地运行，还需要 Python 3.11+ 和 `uv`。Fork 后，
+你可以修改 track，并让 Actions 自动生成日报和周报。
+
+#### B1 · 🍴 Fork 并克隆仓库
 
 点击 GitHub 右上角 **Fork**，然后在自己的 Fork 中打开 **Issues** 和 **Actions**。
 如果要在本地修改 track，再把自己的 Fork 克隆下来：
@@ -103,7 +153,7 @@ git clone https://github.com/你的用户名/OmniSource.git
 Set-Location OmniSource
 ```
 
-### Step 2 · 🔑 配置模型
+#### B2 · 🔑 配置模型
 
 在 **Settings → Secrets and variables → Actions** 添加密钥；模型写在 track 的 `llm` 部分：
 
@@ -148,7 +198,7 @@ llm:
 
 如果 track 使用 Anthropic，添加 `ANTHROPIC_API_KEY`；如果使用 Reddit 的 OAuth 模式，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET`。这些都是可选项，不用的来源不需要配置。
 
-### Step 3 · ⚡ 快速启动：使用现有 track
+#### B3 · ⚡ 快速启动：使用现有 track
 
 如果你想先看一份报告，不需要创建或修改 YAML。只要在
 [omnisource.yaml](omnisource.yaml) 的 `active_tracks` 中保留已有方向：
@@ -162,9 +212,9 @@ active_tracks:
 保存后打开 **Actions → Daily GitHub Issue Report → Run workflow**。每个 active track
 会生成一份独立的 GitHub Issue；也可以运行 **Weekly GitHub Issue Report** 生成周报。
 
-这条路径适合第一次使用：只需要完成 Step 0–2，然后直接运行 Actions。已有示例包括 [AI 算法](tracks/research/ai-algorithm.yaml)、[创业信息](tracks/venture/entrepreneur.yaml) 和 [AI 工具](tracks/builder/ai-tools.yaml)。
+这条路径适合长期使用：完成 B1–B2 后即可运行 Actions。已有示例包括 [AI 算法](tracks/research/ai-algorithm.yaml)、[创业信息](tracks/venture/entrepreneur.yaml) 和 [AI 工具](tracks/builder/ai-tools.yaml)。
 
-### Step 4 · 🛠️ 个性化配置：创建自己的 track
+#### B4 · 🛠️ 个性化配置：创建自己的 track
 
 如果你想长期跟踪自己的主题，复制一个最接近的示例。每个名称都对应 `tracks/<类型>/` 下的一个 YAML 文件：
 
@@ -214,9 +264,9 @@ active_tracks:
 
 常用的可调项：关键词与排除词、arXiv 分类、RSS 地址、每类保留数量、报告语言和回看天数。可参考 [AI 算法示例](tracks/research/ai-algorithm.yaml)、[创业示例](tracks/venture/entrepreneur.yaml) 和 [AI 工具示例](tracks/builder/ai-tools.yaml)。
 
-配置完成后，把新 track 加入 `active_tracks`，再回到 Step 3 运行 Actions。它只会影响你自己的 Fork，不会改变官方网站。
+配置完成后，把新 track 加入 `active_tracks`，再回到 B3 运行 Actions。它只会影响你自己的 Fork，不会改变官方网站。
 
-### Step 5 · 📡 配置额外信息源
+#### B5 · 📡 配置额外信息源
 
 在 track 的 `sources` 中打开来源，再填写对应配置块。建议先从公开来源开始：arXiv、Hugging Face、RSS、GitHub 和 Hacker News 都不需要登录、API key、OpenCLI 或 Browser Bridge。
 
@@ -316,7 +366,7 @@ fallback 读取知乎内容。要验证 OmniSource 自己的知乎 source，请�
 uv run python -c 'from omnisource.sources.zhihu import ZhihuSource; rows=ZhihuSource().fetch({"days":30,"zhihu":{"creators":[{"user":"USER_NAME","articles":True,"answers":True}]}}); print(f"zhihu_signals={len(rows)}"); [print(x.title) for x in rows]'
 ```
 
-### Step 6 · 🧪 可选：本地验证
+#### B6 · 🧪 可选：本地验证
 
 如果想在运行 Actions 前检查采集、去重和筛选，可以用不调用模型的命令进行本地预览：
 
@@ -334,7 +384,7 @@ uv sync
 uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
 ```
 
-如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 Step 2 配置的密钥，X 则额外使用 `APIFY_TOKEN`。
+如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 B2 配置的密钥，X 则额外使用 `APIFY_TOKEN`。
 
 开源版本只负责你 Fork 后的 GitHub Issue 报告，不负责官网日报、周报或邮箱订阅。每个 track 会记录已经发布的内容：日报不会重复之前的日报，周报也不会重复之前的周报；`--no-memory` 仅用于调试，会暂时关闭这项保护。
 
