@@ -63,11 +63,12 @@ def rank(signals: list[Signal], track: dict) -> list[Signal]:
 def make_analyst(track: dict, enabled: bool) -> Analyst | None:
     """Build the Analyst once, or None if the LLM is unavailable/disabled."""
     llm_cfg = track.get("llm", {})
-    provider_name = llm_cfg.get("provider")
+    provider_name = os.environ.get("OMNISOURCE_LLM_PROVIDER") or llm_cfg.get("provider")
+    model = os.environ.get("OMNISOURCE_LLM_MODEL") or llm_cfg.get("model")
     if not enabled or not provider_name:
         return None
     try:
-        provider = get_provider(provider_name, llm_cfg.get("model"))
+        provider = get_provider(provider_name, model)
     except Exception as exc:
         if os.environ.get("OMNISOURCE_REQUIRE_LLM") == "1":
             raise RuntimeError(f"LLM is required but unavailable: {exc}") from exc

@@ -198,6 +198,14 @@ use `OPENAI_COMPATIBLE_API_KEY` / `OPENAI_COMPATIBLE_BASE_URL` and
 The secret name stays `OPENAI_COMPATIBLE_API_KEY`; its value is the Gemini, Qwen,
 or gateway key.
 
+To use one compatible gateway for every Actions track without editing each YAML,
+add these repository **Actions variables**:
+
+~~~
+OMNISOURCE_LLM_PROVIDER=openai_compatible
+OMNISOURCE_LLM_MODEL=model-supported-by-your-gateway
+~~~
+
 If a track uses Anthropic, add `ANTHROPIC_API_KEY`. If it uses Reddit's OAuth
 backend, also add `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET`. These are
 optional; unused sources need no credentials.

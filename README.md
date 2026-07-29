@@ -196,6 +196,14 @@ llm:
 
 密钥名称固定使用 `OPENAI_COMPATIBLE_API_KEY`；模型名和 Base URL 以服务商文档为准。GitHub Actions 创建 Issue 所需的 `GITHUB_TOKEN` 会自动提供。
 
+如果想让所有 Actions track 统一使用中转接口，不必逐个修改 YAML；在
+**Settings → Secrets and variables → Actions → Variables** 添加：
+
+~~~
+OMNISOURCE_LLM_PROVIDER=openai_compatible
+OMNISOURCE_LLM_MODEL=中转站支持的模型名
+~~~
+
 如果 track 使用 Anthropic，添加 `ANTHROPIC_API_KEY`；如果使用 Reddit 的 OAuth 模式，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET`。这些都是可选项，不用的来源不需要配置。
 
 #### B3 · ⚡ 快速启动：使用现有 track
