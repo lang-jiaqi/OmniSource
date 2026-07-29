@@ -19,6 +19,7 @@ from .agents import Collector, curator, editor, quality
 from .config import DB_PATH, DEFAULT_TRACK, REPORTS_DIR, ROOT, track_path
 from .memory import SignalStore
 from .models import Signal
+from .personalization import adjusted_score
 from .publishers import Report, build_publishers
 
 
@@ -184,7 +185,7 @@ def run_pipeline(track_name: str = DEFAULT_TRACK, no_llm: bool = False, no_memor
     daily report, so weekly issues do not repeat one another without suppressing
     items from the daily report."""
     load_dotenv(ROOT / ".env")
-    track = load_track(track_name)
+    track = {**load_track(track_name), "_reference": track_name}
     if weekly:
         track = {**track, "days": track.get("weekly_days", 7)}
     if days is not None:
@@ -212,9 +213,13 @@ def run_pipeline(track_name: str = DEFAULT_TRACK, no_llm: bool = False, no_memor
     print("Selected " + ", ".join(f"{len(v)} {t}" for t, v in sections.items()))
 
     if track.get("enrich_openalex", True):
-        from .enrich import (enrich_author_stats, enrich_coauthorship,
-                             enrich_arxiv_pdf_affiliations, enrich_openalex,
-                             enrich_semantic_scholar)
+        from .enrich import (
+            enrich_arxiv_pdf_affiliations,
+            enrich_author_stats,
+            enrich_coauthorship,
+            enrich_openalex,
+            enrich_semantic_scholar,
+        )
         n = enrich_openalex(final)
         print(f"OpenAlex: enriched {n} papers (citations/affiliations/author ids)")
         if track.get("graphs", True):
@@ -263,7 +268,13 @@ def run_pipeline(track_name: str = DEFAULT_TRACK, no_llm: bool = False, no_memor
         for typ in ("paper", "repo", "blog"):
             items = sections.get(typ)
             if items:
-                items.sort(key=lambda s: (s.review_score or 0.0, s.final_score or 0.0), reverse=True)
+                items.sort(
+                    key=lambda s: (
+                        adjusted_score(s.review_score or 0.0, s),
+                        s.final_score or 0.0,
+                    ),
+                    reverse=True,
+                )
 
     candidate_sections = curator.merge_candidate_sections(sections, candidate_sections)
 

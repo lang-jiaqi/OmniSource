@@ -13,6 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 from .. import i18n
 from ..entrepreneur_taxonomy import assign_entrepreneur_topics
 from ..models import Signal
+from ..repository_feedback import feedback_controls_markdown
 from ..source_evidence import source_signal_markdown
 from ..topic_taxonomy import flatten_topics
 from .curator import SECTIONS
@@ -87,7 +88,7 @@ def _extra_link_line(s: Signal, t: dict) -> str:
     return f"**{t['code']}:** {s.code_url}"
 
 
-def _item_context(s: Signal, n: int, t: dict, language: str | None = None) -> dict:
+def _item_context(s: Signal, n: int, t: dict, track: dict, language: str | None = None) -> dict:
     """Flatten a Signal into the fields a template needs — the conditional
     'which meta to show' logic stays here so templates stay presentational."""
     authors = ", ".join(s.authors[:5]) + (" et al." if len(s.authors) > 5 else "")
@@ -142,6 +143,7 @@ def _item_context(s: Signal, n: int, t: dict, language: str | None = None) -> di
         "meta": "  ·  ".join(meta),
         "link_line": _extra_link_line(s, t),
         "source_signal_line": source_signal_markdown(s, language),
+        "feedback_line": feedback_controls_markdown(s, track, language),
         "why_it_matters": why_it_matters,
         "abstract": _localized_abstract(s, localized, language) if s.type == "paper" else "",
         "method_brief": method_brief,
@@ -174,7 +176,7 @@ def build_context(sections: dict[str, list[Signal]], track: dict, date_str: str,
     topic_counts: dict[str, int] = {}
     section_ctx = []
     if watchlist:
-        entries = [_item_context(s, i, t, language) for i, s in enumerate(watchlist, 1)]
+        entries = [_item_context(s, i, t, track, language) for i, s in enumerate(watchlist, 1)]
         section_ctx.append({"heading": t["watchlist"], "groups": [{"topic": None, "entries": entries}]})
     for typ, _quota_key in SECTIONS:
         items = sections.get(typ)
@@ -187,11 +189,11 @@ def build_context(sections: dict[str, list[Signal]], track: dict, date_str: str,
                 rendered = []
                 for s in group:
                     n += 1
-                    rendered.append(_item_context(s, n, t, language))
+                    rendered.append(_item_context(s, n, t, track, language))
                     topic_counts[topic] = topic_counts.get(topic, 0) + 1
                 groups.append({"topic": topic, "entries": rendered})
         else:
-            groups.append({"topic": None, "entries": [_item_context(s, i, t, language) for i, s in enumerate(items, 1)]})
+            groups.append({"topic": None, "entries": [_item_context(s, i, t, track, language) for i, s in enumerate(items, 1)]})
         section_ctx.append({"heading": t[typ], "groups": groups})
     return {
         "period": period,

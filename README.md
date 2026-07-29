@@ -398,6 +398,28 @@ uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
 
 GitHub Actions 会用仓库缓存保存 `data/memory.db`，所以跨次运行也能继续去重；日报和周报共享同一份记忆库，但使用不同的记忆范围。如果你手动清空 Actions cache，下一次运行可能重新出现较早内容。
 
+#### B7 · 🎯 让报告学习你的偏好
+
+在 Fork 的 GitHub Issue 报告中，每条内容都会显示四类操作：
+
+- **喜欢**：后续提升相似主题、关键词和作者内容；
+- **忽略**：即使记忆缓存丢失，也不再推送这一条；
+- **降低此类**：降低同类主题和关键词的后续排名；
+- **关注作者**：作者的新内容可越过普通关键词门槛，并获得排名提升。
+
+点击后 GitHub 会打开一条预填的反馈 Issue，由你确认提交。下一次日报或周报运行时，workflow 只会导入仓库所有者创建的结构化反馈，然后同时应用于确定性筛选、排名和 LLM 推荐判断。
+
+组织名下的 Fork 可以在 Actions Variables 中设置 `OMNISOURCE_FEEDBACK_OWNER`，指定允许学习的 GitHub 用户名。本地运行可以使用 CLI：
+
+```bash
+omnisource feedback --action like --track research/ai-algorithm \
+  --item-id 2607.12345 --item-type paper --title "Example paper" \
+  --keywords "reasoning,agent"
+
+omnisource feedback --action follow-author --track research/ai-algorithm \
+  --author "Example Researcher"
+```
+
 ## 🧱 代码结构
 
 开源区的目录按“抓取 → 筛选 → 发布”的流程组织：

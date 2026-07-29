@@ -90,7 +90,7 @@ class PromptFeedbackTests(unittest.TestCase):
 
         summary = render_preference_summary(events, max_preferences=10)
 
-        self.assertIn("Source events with reasons: 2", summary)
+        self.assertIn("Source feedback events: 2", summary)
         self.assertIn("Prefer repo recommendations", summary)
         self.assertIn("Avoid paper recommendations", summary)
         self.assertLess(summary.index("Fresh implementation"), summary.index("Only generic"))

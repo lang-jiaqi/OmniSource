@@ -31,6 +31,21 @@ jobs:
           key: omnisource-memory-${{ github.ref_name }}-${{ github.run_id }}
           restore-keys: |
             omnisource-memory-${{ github.ref_name }}-
+      - name: Build personalization profile from owner feedback
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FEEDBACK_OWNER: ${{ vars.OMNISOURCE_FEEDBACK_OWNER || github.repository_owner }}
+        run: |
+          gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state all \
+            --limit 1000 \
+            --json number,author,body,createdAt,updatedAt \
+            > "$RUNNER_TEMP/omnisource-feedback-issues.json"
+          uv run omnisource import-feedback-issues \
+            --issues "$RUNNER_TEMP/omnisource-feedback-issues.json" \
+            --owner "$FEEDBACK_OWNER"
+          uv run omnisource summarize-feedback
       - name: Generate one Issue per active track
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
