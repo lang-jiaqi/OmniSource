@@ -3,8 +3,8 @@
 <h1>🔭 OmniSource</h1>
 
 <p>
-  <strong>Connect signals from across the world and explore the infinite possibilities of AI with researchers, innovators, and developers</strong><br>
-  ☘️ Three information channels: research daily｜startup market radar｜developer tools weekly
+  <strong>联结全域时代信号，与科研者、创变者、开发者共探 AI 世界的无限可能</strong><br>
+   ☘️三重信息流通道：科研日报｜创业市场雷达｜开发者工具周刊
 </p>
 
 <p>
@@ -16,138 +16,139 @@
 </p>
 
 <p>
-  🌐 <a href="https://lang-jiaqi.github.io/omnisource-site/">Visit the OmniSource official site</a>
+  🌐 <a href="https://lang-jiaqi.github.io/omnisource-site/">访问 OmniSource 官网</a>
 </p>
 
 <p>
-  <a href="https://lang-jiaqi.github.io/omnisource-site/report.html">Research reports</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html">Startup intelligence</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/tools.html">AI tool radar</a> ·
-  <a href="README.zh-CN.md">中文</a>
+  <a href="https://lang-jiaqi.github.io/omnisource-site/report.html">科研报告</a> ·
+  <a href="https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html">创业信息流</a> ·
+  <a href="https://lang-jiaqi.github.io/omnisource-site/tools.html">AI 工具雷达</a> ·
+  <a href="README.en.md">English</a>
 </p>
 
 </div>
 
-There is more information than ever, yet it is harder to find what is truly worth paying attention to. OmniSource captures signals from papers, technical blogs, GitHub, industry media, and communities, then deduplicates, filters, and ranks them into a report worth opening.
+信息越来越多，真正值得关注的东西反而更难找到。OmniSource 从论文、技术博客、GitHub、行业媒体和社区中捕捉信号，去重、筛选、排序，最后交给你一份值得打开的报告。
 
-You can read the unified information source on the official site, or fork the repository, rewrite your own keywords and sources, and have a personalized report published automatically to GitHub Issues. 📝
+你可以直接阅读官网的统一信息源，也可以 Fork 仓库，改写自己的关键词和来源，让专属报告自动发布到 GitHub Issues。📝
 
-## 📬 Two ways to use it
+## 📬 两种使用方式
 
-| Entry point | Best for | Content control |
+| 入口 | 适合谁 | 内容控制权 |
 |---|---|---|
-| [Official site 🌐](https://lang-jiaqi.github.io/omnisource-site/) | People who want to read the unified information source directly | Maintained by the project team |
-| GitHub Issue 🧩 | People who want to DIY their own information stream | Modify it yourself after forking |
+| [官方网站 🌐](https://lang-jiaqi.github.io/omnisource-site/) | 想直接阅读统一信息源的人 | 项目团队维护 |
+| GitHub Issue 🧩 | 想 DIY 自己的信息流的人 | Fork 后自行修改 |
 
-This public repository provides only the GitHub Issue DIY workflow. The official site's daily reports, weekly reports, and email subscriptions belong to the official website.
+这个公开仓库只负责 GitHub Issue 这一种 DIY 方式。官网的日报、周报和邮箱订阅属于官方网站。
 
-The local `reports/` directory stores Markdown files only, making them convenient to inspect and debug.
+本地的 `reports/` 目录只保存 Markdown 文件，方便查看和调试。
 
-## 🧭 Three customizable tracks
+## 🧭 三种自定义 track
 
-Choose a report direction based on your role, then continue customizing it in your fork:
+你可以根据自己的身份，选择一种报告方向，再在 Fork 中继续修改：
 
-| Type | What it follows | Official site entry | Open-source YAML track |
+| 类型 | 适合关注什么 | 官网对应入口 | 开源 YAML track |
 |---|---|---|---|
-| **Researcher** 🔬 | Papers, research methods, lab updates, and open-source implementations | [Research reports](https://lang-jiaqi.github.io/omnisource-site/report.html) | [ai-algorithm.yaml](tracks/research/ai-algorithm.yaml) |
-| **Entrepreneur** 🚀 | Funding, products, markets, founding teams, and hiring | [Startup intelligence](https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html) | [entrepreneur.yaml](tracks/venture/entrepreneur.yaml) |
-| **Community developer** 🧑‍💻 | AI tools | [AI tool radar](https://lang-jiaqi.github.io/omnisource-site/tools.html) | [ai-tools.yaml](tracks/builder/ai-tools.yaml) |
+| **研究者** 🔬 | 论文、研究方法、实验室动态、开源实现 | [科研报告](https://lang-jiaqi.github.io/omnisource-site/report.html) | [ai-algorithm.yaml](tracks/research/ai-algorithm.yaml) |
+| **企业家** 🚀 | 融资、产品、市场、创始团队和招聘 | [创业信息流](https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html) | [entrepreneur.yaml](tracks/venture/entrepreneur.yaml) |
+| **社区开发者** 🧑‍💻 | AI 工具 | [AI 工具雷达](https://lang-jiaqi.github.io/omnisource-site/tools.html) | [ai-tools.yaml](tracks/builder/ai-tools.yaml) |
 
-The three types are fundamentally the same: copy a track, customize its keywords, sources, and filtering rules, then view your results through GitHub Issues. The directory names are `research/`, `venture/`, and `builder/`; each YAML file in the research directory is a specific research domain.
+三种类型的本质是同一个：复制一个 track，改成你自己的关键词、来源和筛选标准，然后通过 GitHub Issue 查看自己的结果。目录名分别是 `research/`、`venture/` 和 `builder/`；科研目录里的每个 YAML 就是一个具体的 research domain。
 
-The official site and OpenSource use the same collection, deduplication, relevance judgment, quality filtering, ranking, and quota controls. OpenSource lets you freely add or replace sources, but new sources only expand the candidate pool; every candidate still goes through the same curation pipeline. The official site simply uses the official sources maintained by the project team.
+官网和 OpenSource 使用同一套抓取、去重、相关性判断、质量筛选、排序和数量控制。OpenSource 可以自由增加或替换 sources，但新增来源只会扩大候选池，仍然必须经过同样的精选机制；官网只是使用项目团队维护的官方 sources。
 
-The AI-tools track also uses six shared scores: relevance, practical value, freshness, usability, credibility, and differentiation.
+其中 AI 工具 track 还会统一使用六项评分：相关性、实用价值、新鲜度、可用性、可信度、差异化。
 
-## 🚀 Quickstart
+## 🚀 快速开始
 
-### Step 0 · 🧰 Prepare the environment
+### Step 0 · 🧰 准备环境
 
-Check the environment in your terminal:
+在终端确认环境：
 
 ```bash
-python3 --version   # 3.11+
+python3 --version   # 需要 3.11+
 uv --version
 git --version
 ```
 
-If `uv` is not installed:
+如果没有 `uv`，安装：
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Windows PowerShell:
+Windows PowerShell：
 
 ```powershell
 irm https://astral.sh/uv/install.ps1 | iex
 ```
 
-You also need a GitHub account to fork the repository and receive Issues.
+另外需要一个 GitHub 账号，用来 Fork 仓库和接收 Issues。
 
-### Step 1 · 🍴 Fork the repository
+### Step 1 · 🍴 Fork 仓库
 
-Click **Fork** in the upper-right corner of GitHub, then enable **Issues** and **Actions** in your fork.
-If you want to modify a track locally, clone your fork:
+点击 GitHub 右上角 **Fork**，然后在自己的 Fork 中打开 **Issues** 和 **Actions**。
+如果要在本地修改 track，再把自己的 Fork 克隆下来：
 
 **macOS / Linux**
 
 ```bash
-git clone https://github.com/your-username/OmniSource.git && cd OmniSource
+git clone https://github.com/你的用户名/OmniSource.git && cd OmniSource
 ```
 
 **Windows PowerShell**
 
 ```powershell
-git clone https://github.com/your-username/OmniSource.git
+git clone https://github.com/你的用户名/OmniSource.git
 Set-Location OmniSource
 ```
 
-### Step 2 · 🔑 Configure a model
+### Step 2 · 🔑 配置模型
 
-Add secrets under **Settings → Secrets and variables → Actions**; models are configured in the track's `llm` section:
+在 **Settings → Secrets and variables → Actions** 添加密钥；模型写在 track 的 `llm` 部分：
 
-| Use | Recommended model examples |
+| 用途 | 推荐模型示例 |
 |---|---|
-| Information collection, summaries, and daily reports | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
-| Stronger reasoning, filtering, and judgment | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
+| 信息收集、摘要、日常报告 | OpenAI `gpt-4.1-mini` · Gemini `gemini-2.5-flash` · Qwen `qwen-plus` |
+| 更强的推理、筛选和判断 | OpenAI `o3-mini` · Gemini `gemini-2.5-pro` · Qwen `qwen-max` |
 
-OpenAI's official API:
-
-~~~
-OPENAI_API_KEY=your OpenAI API key
-~~~
-
-Gemini, Qwen, or a gateway using an OpenAI-compatible API:
+OpenAI 官方接口：
 
 ~~~
-OPENAI_COMPATIBLE_API_KEY=your Gemini / Qwen / gateway key
-OPENAI_COMPATIBLE_BASE_URL=https://the-compatible-service-endpoint/v1
+OPENAI_API_KEY=你的 OpenAI API key
 ~~~
 
-Fill in the corresponding track configuration:
+Gemini、Qwen 或中转站使用 OpenAI-compatible 接口：
+
+~~~
+OPENAI_COMPATIBLE_API_KEY=你的 Gemini / Qwen / 中转站 key
+OPENAI_COMPATIBLE_BASE_URL=https://对应服务的兼容接口/v1
+~~~
+
+track 中对应填写：
 
 ~~~yaml
 llm:
-  provider: openai                 # Official OpenAI API
+  provider: openai                 # OpenAI 官方
   model: gpt-4.1-mini
 ~~~
 
-Gemini, Qwen, and gateways:
+Gemini、Qwen 和中转站：
 
 ~~~yaml
 llm:
   provider: openai_compatible
-  model: gemini-2.5-flash       # Or qwen-plus or another supported model
+  model: gemini-2.5-flash       # 或 qwen-plus、服务商支持的其他模型
 ~~~
 
-The secret name must be `OPENAI_COMPATIBLE_API_KEY`; use the provider's documentation for the model name and Base URL. GitHub Actions automatically provides the `GITHUB_TOKEN` needed to create Issues in your own fork. The upstream repository uses `OMNISOURCE_ISSUE_TOKEN` to publish reports to `lang-jiaqi/OmniSource-workspace`.
+密钥名称固定使用 `OPENAI_COMPATIBLE_API_KEY`；模型名和 Base URL 以服务商文档为准。GitHub Actions 创建 Issue 所需的 `GITHUB_TOKEN` 会自动提供。
 
-If a track uses Anthropic, add `ANTHROPIC_API_KEY`. If it uses Reddit's OAuth mode, also add `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET`. These are optional; sources you do not use need no configuration.
+如果 track 使用 Anthropic，添加 `ANTHROPIC_API_KEY`；如果使用 Reddit 的 OAuth 模式，再添加 `REDDIT_CLIENT_ID` 和 `REDDIT_CLIENT_SECRET`。这些都是可选项，不用的来源不需要配置。
 
-### Step 3 · ⚡ Quick start: use an existing track
+### Step 3 · ⚡ 快速启动：使用现有 track
 
-If you want to see a report first, you do not need to create or modify YAML. Simply keep the desired directions in the `active_tracks` section of [omnisource.yaml](omnisource.yaml):
+如果你想先看一份报告，不需要创建或修改 YAML。只要在
+[omnisource.yaml](omnisource.yaml) 的 `active_tracks` 中保留已有方向：
 
 ```yaml
 active_tracks:
@@ -155,13 +156,14 @@ active_tracks:
   - venture/entrepreneur
 ```
 
-Save the file, then open **Actions → Daily GitHub Issue Report → Run workflow**. Each active track generates a separate GitHub Issue. You can also run **Weekly GitHub Issue Report** to generate a weekly report.
+保存后打开 **Actions → Daily GitHub Issue Report → Run workflow**。每个 active track
+会生成一份独立的 GitHub Issue；也可以运行 **Weekly GitHub Issue Report** 生成周报。
 
-This path is suitable for first-time users: complete only Steps 0–2, then run Actions. Existing examples include [AI algorithm](tracks/research/ai-algorithm.yaml), [startup intelligence](tracks/venture/entrepreneur.yaml), and [AI tools](tracks/builder/ai-tools.yaml).
+这条路径适合第一次使用：只需要完成 Step 0–2，然后直接运行 Actions。已有示例包括 [AI 算法](tracks/research/ai-algorithm.yaml)、[创业信息](tracks/venture/entrepreneur.yaml) 和 [AI 工具](tracks/builder/ai-tools.yaml)。
 
-### Step 4 · 🛠️ Personalize the configuration: create your own track
+### Step 4 · 🛠️ 个性化配置：创建自己的 track
 
-If you want to follow a topic over the long term, copy the closest example. Each name corresponds to a YAML file under `tracks/<audience>/`:
+如果你想长期跟踪自己的主题，复制一个最接近的示例。每个名称都对应 `tracks/<类型>/` 下的一个 YAML 文件：
 
 **macOS / Linux**
 
@@ -175,12 +177,12 @@ cp tracks/research/ai-algorithm.yaml tracks/research/my-radar.yaml
 Copy-Item tracks/research/ai-algorithm.yaml tracks/research/my-radar.yaml
 ```
 
-Then edit the name, sources, keywords, and output counts:
+然后修改名称、来源、关键词和输出数量：
 
 ```yaml
 name: my-radar
-display_name: My area of interest
-description: What I want to follow over time
+display_name: 我的关注方向
+description: 我想长期跟踪的内容
 
 sources:
   - arxiv
@@ -188,17 +190,17 @@ sources:
   - github
 
 keywords:
-  - your keyword
+  - 你的关键词
   - another keyword
 
 output:
   top_papers: 10
   top_repos: 5
   top_blogs: 5
-  language: English
+  language: 中文
 ```
 
-Finally, add it to [omnisource.yaml](omnisource.yaml):
+最后在 [omnisource.yaml](omnisource.yaml) 中加入它：
 
 ```yaml
 active_tracks:
@@ -207,38 +209,22 @@ active_tracks:
   - research/my-radar
 ```
 
-Common options include keywords and exclusion terms, arXiv categories, RSS URLs, the number kept per category, report language, and the lookback window. See the [AI algorithm example](tracks/research/ai-algorithm.yaml), [startup example](tracks/venture/entrepreneur.yaml), and [AI tools example](tracks/builder/ai-tools.yaml).
+常用的可调项：关键词与排除词、arXiv 分类、RSS 地址、每类保留数量、报告语言和回看天数。可参考 [AI 算法示例](tracks/research/ai-algorithm.yaml)、[创业示例](tracks/venture/entrepreneur.yaml) 和 [AI 工具示例](tracks/builder/ai-tools.yaml)。
 
-After configuring the track, add it to `active_tracks` and return to Step 3 to run Actions. It affects only your fork and does not change the official website.
+配置完成后，把新 track 加入 `active_tracks`，再回到 Step 3 运行 Actions。它只会影响你自己的 Fork，不会改变官方网站。
 
-### Step 5 · 📡 Choose your sources
+### Step 5 · 📡 配置额外信息源
 
-Sources are enabled in the track's top-level `sources:` list. The easiest first
-run uses public sources only. They need no extra account, token, Chrome, or
-OpenCLI.
+在 track 的 `sources` 中打开来源，再填写对应配置块。建议先从公开来源开始：arXiv、Hugging Face、RSS、GitHub 和 Hacker News 都不需要登录、API key、OpenCLI 或 Browser Bridge。
 
-Open the track file you copied in Step 4 and replace its entire `sources:` block
-with this:
+RSS 的配置示例：
 
 ```yaml
 sources:
   - arxiv
-  - hf_papers
   - rss
   - github
-  - hackernews
-```
 
-Keep the track's existing `categories`, `keywords`, `llm`, and `output` sections.
-The `arxiv` source needs `categories`; the example tracks already contain them.
-`hf_papers` and `hackernews` work without a separate configuration block.
-
-#### RSS feeds
-
-RSS settings go at the top level of the same track file. Do not put them under
-an `rss:` heading. Replace the existing RSS block, or add this block once:
-
-```yaml
 rss_feeds:
   - https://huggingface.co/blog/feed.xml
   - https://blog.research.google/feeds/posts/default
@@ -246,74 +232,34 @@ rss_feeds:
 rss_days: 21
 ```
 
-Optional public sources can be enabled by adding `blogrxiv` to the same list:
+**Twitter / X：用 Apify 跑 GitHub Actions**
+
+在 Fork 仓库的 **Settings → Secrets and variables → Actions** 添加 `APIFY_TOKEN`，然后写入：
 
 ```yaml
 sources:
-  - arxiv
-  - hf_papers
-  - rss
-  - github
-  - hackernews
-  - blogrxiv
-```
-
-Optional tuning fields:
-
-```yaml
-hf_limit: 100
-hn_query: "AI agent OR foundation model"
-hn_top: 50
-blogrxiv_days: 1
-github_query: "AI agent OR foundation model"
-```
-
-#### Twitter / X in GitHub Actions
-
-Use Apify for X in GitHub Actions. In your fork, open **Settings → Secrets and
-variables → Actions → New repository secret** and add:
-
-```text
-Name: APIFY_TOKEN
-Secret: paste your Apify token here
-```
-
-Never put the token in YAML or commit it to GitHub. Then replace the track's
-source list with the following version, or add only the `twitter` line to your
-existing list:
-
-```yaml
-sources:
-  - arxiv
-  - hf_papers
-  - rss
-  - github
-  - hackernews
   - twitter
 
 twitter:
   mode: apify
-  queries:
-    - "AI agent"
-    - "LLM tool"
-  handles:
-    - OpenAI
-    - AnthropicAI
+  queries: ["AI agent", "LLM tool"]
+  handles: [OpenAI, AnthropicAI]
   max_results: 50
 ```
 
-Apify does not require Chrome, Browser Bridge, or OpenCLI. It may charge after
-its free quota is used. See [Twitter/X configuration](docs/twitter-setup.md) for
-the OpenCLI and local alternatives.
+Apify 通常有免费额度，超出后可能收费；它不需要 Chrome、Browser Bridge 或 OpenCLI。完整字段见 [Twitter/X 配置](docs/twitter-setup.md)。如果只在本地复用 Chrome 登录状态，也可以使用 OpenCLI，但这不是 GitHub Actions 的推荐路径。
 
-#### Xiaohongshu / Zhihu: local computer only
+**小红书 / 知乎：仅适合本地 OpenCLI**
 
-These sources use a logged-in Chrome session through [OpenCLI](https://github.com/jackwener/OpenCLI).
-They do not run on an ordinary GitHub Actions runner. Skip this section if you
-only want scheduled GitHub Issues.
+这两个来源需要安装 [OpenCLI](https://github.com/jackwener/OpenCLI) 和 Browser Bridge，并在 Chrome 登录对应网站；普通 GitHub Actions runner 访问不到你的浏览器。先复制示例：
 
-Install OpenCLI and Browser Bridge, log in to both sites in Chrome, and check
-the connection:
+**macOS / Linux**
+
+```bash
+cp examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
+```
+
+先检查 OpenCLI：
 
 ```bash
 opencli doctor
@@ -322,72 +268,54 @@ opencli zhihu user-articles USER_NAME --limit 3 -f json
 opencli zhihu user-answers USER_NAME --limit 3 -f json
 ```
 
-For a local track, add the source names and replace the placeholders:
-
-```yaml
-sources:
-  - xiaohongshu
-  - zhihu
-
-xiaohongshu:
-  enabled: true
-  command: opencli
-  timezone: Asia/Shanghai
-  days: 1
-  max_notes_per_creator: 20
-  creators:
-    - name: "Creator name"
-      user_id: "USER_ID"
-
-zhihu:
-  enabled: true
-  command: opencli
-  timezone: Asia/Shanghai
-  days: 7
-  max_items_per_creator: 20
-  creators:
-    - name: "Zhihu user"
-      user: "USER_NAME"
-      articles: true
-      answers: true
-```
-
-Then run the track locally:
+如果 macOS 出现 `Unable to find application named 'OpenCLIApp'`，不是账号没登录，而是
+系统里的 `opencli` 启动器没有成功拉起后台程序。直接使用 App 内置 runtime：
 
 ```bash
+env -u OPENCLI_DAEMON_PORT \
+  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node \
+  /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js \
+  doctor
+```
+
+验证成功后，在同一个终端告诉 OmniSource 使用这个命令：
+
+```bash
+export OPENCLI_COMMAND='env -u OPENCLI_DAEMON_PORT /Applications/OpenCLIApp.app/Contents/Resources/node_modules/node/bin/node /Applications/OpenCLIApp.app/Contents/Resources/node_modules/@jackwener/opencli/dist/src/main.js'
 uv run omnisource run --track builder/my-social-radar
 ```
 
-On Windows, use the same `opencli` commands in PowerShell. If macOS says
-`Unable to find application named 'OpenCLIApp'`, follow the bundled-runtime
-steps in [Xiaohongshu setup](docs/xiaohongshu-setup.md). For the full Zhihu
-field reference, see the [customization guide](docs/customizing-your-radar.md).
+**Windows PowerShell**
 
-#### Reddit
-
-Reddit has two modes. For a local Chrome session, use `mode: opencli`. For
-GitHub Actions, create a Reddit application, add the `REDDIT_CLIENT_ID` and
-`REDDIT_CLIENT_SECRET` repository secrets, and add this configuration:
-
-```yaml
-sources:
-  - reddit
-
-reddit:
-  mode: oauth
-  max_results: 50
-
-reddit_subreddits:
-  - MachineLearning
-  - LocalLLaMA
+```powershell
+Copy-Item examples/tracks/xiaohongshu-radar.yaml tracks/builder/my-social-radar.yaml
+opencli doctor
+opencli xiaohongshu user USER_ID --limit 3 -f json
+opencli zhihu user-articles USER_NAME --limit 3 -f json
+opencli zhihu user-answers USER_NAME --limit 3 -f json
 ```
 
-For the local OpenCLI configuration and Reddit application details, see
-[Reddit setup](docs/reddit-setup.md).
+Windows 不要复制上面的 macOS 路径。Windows 如果 `opencli doctor` 能显示
+`Daemon: running` 和 `Extension: connected`，直接使用 `opencli` 即可。
 
-### Step 6 · 🧪 Optional: validate locally
+简单来说：绿色的 Browser Bridge 只代表浏览器扩展已准备好；OmniSource 还需要
+OpenCLI 的后台 daemon。macOS 的 `opencli` 启动器有时拉不起 daemon，才需要上面的
+App 内置 runtime。登录小红书和知乎本身不是这次报错的原因。
 
-To check collection, deduplication, and filtering before running Actions, use a local preview command that does not call a model:
+把示例中的作者名称和 `USER_ID` 替换成真实信息，再按 [小红书配置](docs/xiaohongshu-setup.md) 和 [自定义配置说明](docs/customizing-your-radar.md) 补充知乎字段。公开来源和 Apify 不需要安装 OpenCLI。
+
+提示：OpenCLI 1.8.5 直接运行知乎 `user-articles` 时，偶尔会出现
+`Navigation rejected`。这不是登录失败；OmniSource 会捕获这个错误，并使用浏览器会话
+fallback 读取知乎内容。要验证 OmniSource 自己的知乎 source，请在已设置
+`OPENCLI_COMMAND` 的终端运行：
+
+```bash
+uv run python -c 'from omnisource.sources.zhihu import ZhihuSource; rows=ZhihuSource().fetch({"days":30,"zhihu":{"creators":[{"user":"USER_NAME","articles":True,"answers":True}]}}); print(f"zhihu_signals={len(rows)}"); [print(x.title) for x in rows]'
+```
+
+### Step 6 · 🧪 可选：本地验证
+
+如果想在运行 Actions 前检查采集、去重和筛选，可以用不调用模型的命令进行本地预览：
 
 **macOS / Linux**
 
@@ -403,59 +331,59 @@ uv sync
 uv run omnisource run --track research/ai-algorithm --no-llm --no-memory
 ```
 
-If a Markdown file appears in `reports/`, the basic configuration is working. To generate official GitHub Issues, run the corresponding workflow in **Actions**; model reports use the keys configured in Step 2, while X in `apify` mode additionally uses `APIFY_TOKEN`.
+如果 `reports/` 中出现 Markdown 文件，说明基础配置已经跑通。正式生成 GitHub Issue 时，在 **Actions** 中运行对应 workflow；模型报告会使用 Step 2 配置的密钥，X 则额外使用 `APIFY_TOKEN`。
 
-The open-source version only handles GitHub Issue reports for your fork; it does not handle the official site's daily reports, weekly reports, or email subscriptions. Each track records what has already been published: daily reports do not repeat earlier daily items, and weekly reports do not repeat earlier weekly items. `--no-memory` is for debugging only and temporarily disables this protection.
+开源版本只负责你 Fork 后的 GitHub Issue 报告，不负责官网日报、周报或邮箱订阅。每个 track 会记录已经发布的内容：日报不会重复之前的日报，周报也不会重复之前的周报；`--no-memory` 仅用于调试，会暂时关闭这项保护。
 
-GitHub Actions stores `data/memory.db` in the repository cache, so deduplication continues across runs. Daily and weekly reports share the same database but use different memory scopes. If you manually clear the Actions cache, older items may appear again on the next run.
+GitHub Actions 会用仓库缓存保存 `data/memory.db`，所以跨次运行也能继续去重；日报和周报共享同一份记忆库，但使用不同的记忆范围。如果你手动清空 Actions cache，下一次运行可能重新出现较早内容。
 
-## 🧱 Code structure
+## 🧱 代码结构
 
-The open-source area is organized around the “collect → filter → publish” flow:
+开源区的目录按“抓取 → 筛选 → 发布”的流程组织：
 
 ~~~text
-omnisource/              core pipeline and CLI
-├── sources/             source adapters
-├── agents/              collection, filtering, analysis, and editing
-├── ranking/             ranking and scoring
-├── publishers/          Markdown and GitHub Issue publishing
-├── llm/                 model interface adapters
-└── main.py              overall pipeline orchestration
-tracks/                  YAML tracks grouped by audience
-├── research/             research directions for researchers
-├── venture/              startup intelligence for entrepreneurs
-└── builder/              tools and engineering directions for developers
-examples/                copyable tracks and sample reports
-.github/workflows/       daily and weekly GitHub Issue workflows
-tests/                   open-source core tests
+omnisource/              核心 pipeline 和 CLI
+├── sources/             各种信息源适配器
+├── agents/              抓取、筛选、分析和编辑
+├── ranking/             排序和评分
+├── publishers/          Markdown 与 GitHub Issue 发布
+├── llm/                 各类模型接口适配
+└── main.py              pipeline 总编排
+tracks/                  按 audience 分类的 YAML 关注方向
+├── research/             研究者的科研方向
+├── venture/              企业家的创业信息
+└── builder/              社区开发者的工具与工程方向
+examples/                可复制的 track 和示例报告
+.github/workflows/       日报与周报 GitHub Issue workflow
+tests/                   开源核心测试
 ~~~
 
-Usually you only need to edit `tracks/<audience>/` and `omnisource.yaml`; modify `omnisource/` only when adding a new source or publishing method.
+通常只需要改 `tracks/<audience>/` 和 `omnisource.yaml`；只有要增加新来源或新发布方式时，才需要修改 `omnisource/`。
 
-## 🧭 FAQ
+## 🧭 常见问题
 
-### 📨 The Actions workflow succeeds, but there is no Issue
+### 📨 Actions 运行成功，但没有 Issue
 
-Check two things:
+确认两件事：
 
-1. **Issues** is enabled for the repository.
-2. The workflow file retains the permissions needed to create Issues. Forks use the `GITHUB_TOKEN` automatically provided by GitHub Actions; the upstream repository also needs the `OMNISOURCE_ISSUE_TOKEN` Secret for its separate Issue destination.
+1. 仓库的 **Issues** 已开启。
+2. workflow 文件中保留了创建 Issue 所需的权限。当前配置使用 GitHub Actions 自动提供的 GITHUB_TOKEN。
 
-### 🔐 `invalid_api_key` error
+### 🔐 报错 invalid_api_key
 
-Check:
+检查：
 
-- Whether the Secret name is exactly correct;
-- Whether the API key was copied completely;
-- Whether the gateway uses `OPENAI_COMPATIBLE_API_KEY` and `OPENAI_COMPATIBLE_BASE_URL`;
-- Whether the Base URL is the API address required by the gateway, usually including `/v1`;
-- Whether the model configured in the track is supported by the gateway.
+- Secret 名称是否完全正确；
+- API key 是否复制完整；
+- 中转站是否使用 OPENAI_COMPATIBLE_API_KEY 和 OPENAI_COMPATIBLE_BASE_URL；
+- Base URL 是否是中转站要求的 API 地址，通常需要包含 /v1；
+- track 中配置的模型是否是中转站支持的模型。
 
-### 🌐 Will changing my report affect the official website?
+### 🌐 我修改了自己的报告，会影响官方网站吗？
 
-No.
+不会。
 
-Your fork only affects your own GitHub Issue reports. The official website uses content and configuration maintained independently by the project team and runs separately from user forks.
+你的 Fork 只影响你自己的 GitHub Issue 报告。官方网站使用项目团队维护的独立内容和配置，和用户 Fork 分开运行。
 
 ## License
 
@@ -465,14 +393,4 @@ This project is licensed under the [PolyForm Noncommercial License 1.0.0](https:
 
 Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, weidong tang
 
-*Corresponding author: Jiaqi Lang · National University of Singapore (NUS) · lang.jiaqi@u.nus.edu*
-
-## Interested in World Models?
-
-The authors of this project are also independently exploring startup opportunities in the world model space.
-
-- **Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), [email](mailto:wangbo.zhao96@gmail.com)) is preparing an early-stage startup focused on world models and their infrastructure. The project is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
-
-- **Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is committed to building systems with general intelligence capabilities that can understand and predict human environments and the real world, and ultimately interact with them. For more information, please visit the [company website](https://www.cardinal-agi.com).
-
-The ventures described above are independent of this project and are not affiliated with one another.
+*Corresponding author: Jiaqi Lang · lang.jiaqi@u.nus.edu*

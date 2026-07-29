@@ -2,10 +2,10 @@
 from __future__ import annotations
 
 from .. import i18n
-from ..entrepreneur_taxonomy import classify_entrepreneur_signal, is_entrepreneur_track
 from ..llm.base import LLMProvider
 from ..models import Signal
 from ..prompt_feedback import feedback_prompt_clause
+from ..entrepreneur_taxonomy import classify_entrepreneur_signal, is_entrepreneur_track
 from ..topic_taxonomy import flatten_topics, match_topic
 
 OTHER_TOPIC = "other"
