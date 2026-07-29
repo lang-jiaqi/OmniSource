@@ -436,3 +436,15 @@ Forks, tracks, sources, and publishers welcome. A good track is often a research
 Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, weidong tang
 
 *Corresponding author: Jiaqi Lang · lang.jiaqi@u.nus.edu*
+
+
+## Interested in World Models?
+
+The authors of this project are also independently exploring entrepreneurial opportunities in the world-model space.
+
+**Wangbo Zhao** ([Google Scholar](https://scholar.google.com.hk/citations?user=aocj89kAAAAJ&hl=zh-CN), [Google Scholar](mailto:wangbo.zhao96@gmail.com)) is currently building an early-stage startup focused on world models and the infrastructure required to develop and scale them. The company is currently raising a seed round. Investors and strategic partners interested in this direction are welcome to get in touch.
+
+**Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is committed to building systems with general-purpose intelligence that can understand, predict, and ultimately interact with human environments and the real world. For more information, please visit the [company website](https://www.cardinal-agi.com/).
+
+These ventures are independent of this project and of each other.
+
