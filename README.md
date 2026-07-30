@@ -474,7 +474,7 @@ This project is licensed under the [PolyForm Noncommercial License 1.0.0](https:
 
 ## Authors
 
-Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, weidong tang
+Jiaqi Lang<sup>*</sup>, Wangbo Zhao, Pengfei Zhou, Run Liu, Bin Xv, Yixing Ma, Weidong Tang
 
 *Corresponding author: Jiaqi Lang · lang.jiaqi@u.nus.edu*
 
