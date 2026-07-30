@@ -55,7 +55,11 @@ def summarize_feedback_cmd(
     max_preferences: int = typer.Option(20, min=1, max=50, help="Maximum preference bullets to keep."),
 ) -> None:
     """Compact raw recommendation feedback into prompt-ready preferences."""
-    from .prompt_feedback import FEEDBACK_EVENTS_PATH, PREFERENCE_SUMMARY_PATH, write_preference_summary
+    from .prompt_feedback import (
+        FEEDBACK_EVENTS_PATH,
+        PREFERENCE_SUMMARY_PATH,
+        write_preference_summary,
+    )
 
     target, event_count, preference_count = write_preference_summary(
         event_path=events or FEEDBACK_EVENTS_PATH,
@@ -65,6 +69,44 @@ def summarize_feedback_cmd(
     typer.echo(f"events with reasons: {event_count}")
     typer.echo(f"preference bullets: {preference_count}")
     typer.echo(f"summary: {target}")
+
+
+@app.command("feedback")
+def feedback_cmd(
+    action: str = typer.Option(..., help="like | ignore | lower-similar | follow-author"),
+    track: str = typer.Option(..., help="Track reference, for example builder/ai-infra."),
+    item_id: str = typer.Option("", help="Canonical report item id."),
+    item_type: str = typer.Option("item", help="paper | repo | blog | social | item"),
+    title: str = typer.Option("", help="Item title, used to identify similar future items."),
+    url: str = typer.Option("", help="Original item URL."),
+    topic: str = typer.Option("", help="Taxonomy topic from the report."),
+    authors: str = typer.Option("", help="Comma-separated item authors."),
+    keywords: str = typer.Option("", help="Comma-separated matching track keywords."),
+    author: str = typer.Option("", help="Author to follow; required for follow-author."),
+    reason: str = typer.Option("", help="Optional explanation for the learned preference."),
+    events: Path | None = typer.Option(None, help="Feedback JSONL; defaults to data/feedback_events.jsonl."),
+) -> None:
+    """Record a local personalization action for future reports."""
+    from .prompt_feedback import record_feedback_event, write_preference_summary
+
+    target = record_feedback_event(
+        action=action,
+        track=track,
+        item_id=item_id,
+        item_type=item_type,
+        title=title,
+        url=url,
+        topic=topic,
+        authors=[item.strip() for item in authors.split(",") if item.strip()],
+        keywords=[item.strip() for item in keywords.split(",") if item.strip()],
+        target_author=author,
+        reason=reason,
+        path=events,
+    )
+    summary, event_count, preference_count = write_preference_summary(event_path=target)
+    typer.echo(f"feedback: {target}")
+    typer.echo(f"events: {event_count}; learned preferences: {preference_count}")
+    typer.echo(f"summary: {summary}")
 
 
 @app.command("import-feedback-issues")

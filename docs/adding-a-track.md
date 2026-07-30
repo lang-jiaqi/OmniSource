@@ -96,6 +96,13 @@ ranking:            # weights for the final score (optional; these are defaults)
   popularity: 0.2
   code_available: 0.1
 
+personalization:    # optional; bounded additions to the normal 0..1 score
+  enabled: true
+  like_boost: 0.12
+  lower_similar_penalty: 0.18
+  follow_author_boost: 0.24
+  similarity_threshold: 0.25
+
 quality_distill:    # optional cheap pre-LLM shortlist controls
   min_score: 0.18
   buffer: 8
@@ -146,3 +153,7 @@ Tips:
   `3` to `5` for a modest personalized candidate set.
 - Repository-synced feedback is scoped by `track`, so owner feedback from one
   track remains distinguishable when Actions builds the next preference summary.
+- Likes and "show fewer" actions generalize through shared track keywords,
+  title terms, topic, and authors. Ignore remains exact-item only. Follow-author
+  can pass the keyword gate but still respects negative keywords and explicit
+  track relevance guardrails.

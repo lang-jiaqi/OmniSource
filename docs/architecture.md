@@ -5,7 +5,7 @@ type — `Signal` — so no stage needs to know where an item came from or where
 going.
 
 ```
-Collector(fetch + dedup) → Curator(keyword filter + rank) → memory filter
+Collector(fetch + dedup) → Curator(keyword + feedback filter/rank) → memory filter
                          → Quality(distill) → Analyst(LLM) → Editor(group + render)
                          → Publishers
 ```
@@ -29,6 +29,7 @@ Supporting modules:
 | Unified item | [`models.py`](../omnisource/models.py) | `Signal` — the one shape everything speaks |
 | Sources | [`sources/`](../omnisource/sources) | turn a feed into `Signal`s (`fetch(track) -> list[Signal]`) |
 | Memory | [`memory/`](../omnisource/memory) | remember reported items so they don't repeat; cache HTTP fetches |
+| Personalization | [`personalization.py`](../omnisource/personalization.py) | exact ignores, bounded like/similar adjustments, and followed-author boosts from owner feedback |
 | Scoring | [`ranking/`](../omnisource/ranking) | weighted final score from the components |
 | Config | [`config.py`](../omnisource/config.py) | central paths and tunables |
 | Orchestration | [`main.py`](../omnisource/main.py) | wires the agents together; `run_pipeline()` |

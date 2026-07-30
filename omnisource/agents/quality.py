@@ -9,6 +9,7 @@ from __future__ import annotations
 import math
 
 from ..models import Signal
+from ..personalization import adjusted_score
 
 QUOTA_KEYS = {
     "paper": "top_papers",
@@ -103,7 +104,7 @@ def score_quality(signal: Signal, track: dict) -> float:
     popularity_score = _popularity_score(signal.popularity)
     code_score = 1.0 if signal.code_url else 0.0
 
-    return min(
+    base = min(
         1.0,
         0.38 * keyword_score
         + 0.22 * content_score
@@ -111,6 +112,7 @@ def score_quality(signal: Signal, track: dict) -> float:
         + 0.14 * popularity_score
         + 0.10 * code_score,
     )
+    return adjusted_score(base, signal)
 
 
 def _keyword_score(signal: Signal, track: dict) -> float:

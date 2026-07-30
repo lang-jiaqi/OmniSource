@@ -407,6 +407,23 @@ tests/                   unit tests for the public core
 
 See [`docs/`](docs): [customizing your reading setup](docs/customizing-your-radar.md) · [architecture](docs/architecture.md) · [adding a source](docs/adding-a-source.md) · [adding a track](docs/adding-a-track.md).
 
+### Personalized feedback
+
+Every item in a fork's GitHub Issue report exposes four actions: **Like**,
+**Ignore**, **Show fewer like this**, and **Follow author**. Each link opens a
+pre-filled feedback Issue for confirmation. The next daily or weekly workflow
+imports owner-authored feedback and applies it to deterministic filtering,
+ranking, and the LLM preference summary. Organization forks can set the Actions
+variable `OMNISOURCE_FEEDBACK_OWNER` to the trusted GitHub user.
+
+Local runs can record the same actions with `omnisource feedback`; for example:
+
+```bash
+omnisource feedback --action lower-similar --track builder/ai-infra \
+  --item-id repo-123 --item-type repo --title "Example project" \
+  --keywords "inference,serving"
+```
+
 ## Status
 
 **v0.2** — a multi-source core for DIY research reports.
@@ -447,4 +464,3 @@ The authors of this project are also independently exploring entrepreneurial opp
 **Pengfei Zhou** ([lance@infrec.tech](mailto:lance@infrec.tech)) is the founder of an independent startup focused on world models and agentic game development. The company is committed to building systems with general-purpose intelligence that can understand, predict, and ultimately interact with human environments and the real world. For more information, please visit the [company website](https://www.cardinal-agi.com/).
 
 These ventures are independent of this project and of each other.
-

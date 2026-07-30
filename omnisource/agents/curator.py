@@ -10,10 +10,20 @@ import os
 
 from ..llm import get_provider
 from ..models import Signal
+from ..personalization import (
+    adjusted_score,
+    apply_feedback,
+    is_followed_author_signal,
+    personalization_adjustment,
+)
 from ..ranking import score_final
 from ..tool_scoring import score_tool
 from .analyst import Analyst
-from .relevance import allows_keyword_fallback, annotate_track_relevance, track_relevance_bonus
+from .relevance import (
+    allows_keyword_fallback,
+    annotate_track_relevance,
+    track_relevance_bonus,
+)
 
 # Signal type -> track output quota key. Section headings are localized (i18n).
 SECTIONS: list[tuple[str, str]] = [
@@ -30,7 +40,7 @@ def rank(signals: list[Signal], track: dict) -> list[Signal]:
     keywords = track.get("keywords", [])
     negatives = track.get("negative_keywords", [])
     kept: list[Signal] = []
-    for s in signals:
+    for s in apply_feedback(signals, track):
         text = f"{s.title} {s.summary}".lower()
         if any(neg.lower() in text for neg in negatives):
             continue
@@ -39,13 +49,19 @@ def rank(signals: list[Signal], track: dict) -> list[Signal]:
         # don't drop them just because the short description misses a keyword.
         # Tracks can also allow curated feeds (for example infra blogs) through
         # as fallback candidates; the analyst/reviewer will judge relevance.
-        if s.keyword_hits == 0 and "github" not in s.sources and not allows_keyword_fallback(s, track):
+        if (
+            s.keyword_hits == 0
+            and "github" not in s.sources
+            and not allows_keyword_fallback(s, track)
+            and not is_followed_author_signal(s)
+        ):
             continue
         if not annotate_track_relevance(s, track):
             continue
         kept.append(s)
     kept.sort(
         key=lambda s: (
+            personalization_adjustment(s),
             track_relevance_bonus(s),
             s.keyword_hits,
             s.popularity,
@@ -87,21 +103,28 @@ def _apply_tool_scores(signals: list[Signal]) -> None:
         extra["tool_evaluation"] = evaluation
         extra["tool_score"] = aggregate
         signal.extra = extra
-        signal.final_score = aggregate / 5.0
+        signal.final_score = adjusted_score(aggregate / 5.0, signal)
 
 
 def enrich_and_rank(signals: list[Signal], track: dict, analyst: Analyst | None) -> list[Signal]:
     """Run the Analyst over candidates, compute the weighted final score, and
     sort by it. Without an analyst, fall back to keyword/popularity order."""
     if analyst is None:
+        signals[:] = apply_feedback(signals, track)
         if track.get("tool_radar"):
             _apply_tool_scores(signals)
             signals.sort(key=lambda s: s.final_score or 0.0, reverse=True)
             return signals
-        signals.sort(key=lambda s: (s.keyword_hits, s.popularity), reverse=True)
+        signals.sort(
+            key=lambda s: (personalization_adjustment(s), s.keyword_hits, s.popularity),
+            reverse=True,
+        )
         return signals
     for s in signals:
         analyst.analyze(s, track)
+    # Topic classification is available only after analysis. Re-apply the
+    # profile so same-topic likes/demotions can affect the final score too.
+    signals[:] = apply_feedback(signals, track)
     successes = getattr(analyst, "successes", None)
     failures = getattr(analyst, "failures", None)
     if successes == 0 and failures:

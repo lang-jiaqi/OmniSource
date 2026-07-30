@@ -11,6 +11,7 @@ The track decides how much each matters via `ranking:` weights.
 from __future__ import annotations
 
 from ..models import Signal
+from ..personalization import adjusted_score
 
 DEFAULT_WEIGHTS = {
     "relevance": 0.4,
@@ -26,9 +27,10 @@ def score_final(signals: list[Signal], weights: dict | None = None) -> None:
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     max_pop = max((s.popularity for s in signals), default=0) or 1
     for s in signals:
-        s.final_score = (
+        base = (
             w["relevance"] * (s.llm_relevance or 0.0)
             + w["novelty"] * (s.novelty or 0.0)
             + w["popularity"] * (s.popularity / max_pop)
             + w["code_available"] * (1.0 if s.code_url else 0.0)
         )
+        s.final_score = adjusted_score(base, s)

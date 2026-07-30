@@ -16,6 +16,8 @@
 {% endif %}
 {% if item.link_line %}- {{ item.link_line }}
 {% endif %}
+{% if item.feedback_line %}- **{{ labels.personalization }}:** {{ item.feedback_line }}
+{% endif %}
 
 {% if item.why_it_matters %}**{{ labels.why }}:** {{ item.why_it_matters }}
 
