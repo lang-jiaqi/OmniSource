@@ -16,13 +16,13 @@
 </p>
 
 <p>
-  🌐 <a href="https://lang-jiaqi.github.io/omnisource-site/en/">Visit the OmniSource website</a>
+  🌐 <a href="https://lang-jiaqi.github.io/omnisource-site/">Visit the OmniSource website</a>
 </p>
 
 <p>
-  <a href="https://lang-jiaqi.github.io/omnisource-site/en/report.html">Research Reports</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/en/entrepreneur.html">Startup Intelligence</a> ·
-  <a href="https://lang-jiaqi.github.io/omnisource-site/en/tools.html">AI Tool Radar</a> ·
+  <a href="https://lang-jiaqi.github.io/omnisource-site/report.html">Research Reports</a> ·
+  <a href="https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html">Startup Intelligence</a> ·
+  <a href="https://lang-jiaqi.github.io/omnisource-site/tools.html">AI Tool Radar</a> ·
   <a href="README.zh-CN.md">中文</a>
 </p>
 
@@ -36,7 +36,7 @@ You can read the unified information feed on the official website, or fork the r
 
 | Entry point | Best for | Who controls the content |
 |---|---|---|
-| [Official website 🌐](https://lang-jiaqi.github.io/omnisource-site/en/) | People who want to read the unified information feed directly | Maintained by the project team |
+| [Official website 🌐](https://lang-jiaqi.github.io/omnisource-site/) | People who want to read the unified information feed directly | Maintained by the project team |
 | GitHub Issues 🧩 | People who want to build their own information feed | You customize it after forking |
 
 This public repository supports the DIY GitHub Issues workflow only. The daily reports, weekly reports, and email subscriptions on the website belong to the official website.
@@ -49,9 +49,9 @@ Choose a report direction based on your role, then continue customizing it in yo
 
 | Type | What to follow | Official website | Open-source YAML track |
 |---|---|---|---|
-| **Researchers** 🔬 | Papers, research methods, lab updates, and open-source implementations | [Research Reports](https://lang-jiaqi.github.io/omnisource-site/en/report.html) | [ai-algorithm.yaml](tracks/research/ai-algorithm.yaml) |
-| **Entrepreneurs** 🚀 | Funding, products, markets, founding teams, and hiring | [Startup Intelligence](https://lang-jiaqi.github.io/omnisource-site/en/entrepreneur.html) | [entrepreneur.yaml](tracks/venture/entrepreneur.yaml) |
-| **Community Developers** 🧑‍💻 | AI tools | [AI Tool Radar](https://lang-jiaqi.github.io/omnisource-site/en/tools.html) | [ai-tools.yaml](tracks/builder/ai-tools.yaml) |
+| **Researchers** 🔬 | Papers, research methods, lab updates, and open-source implementations | [Research Reports](https://lang-jiaqi.github.io/omnisource-site/report.html) | [ai-algorithm.yaml](tracks/research/ai-algorithm.yaml) |
+| **Entrepreneurs** 🚀 | Funding, products, markets, founding teams, and hiring | [Startup Intelligence](https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html) | [entrepreneur.yaml](tracks/venture/entrepreneur.yaml) |
+| **Community Developers** 🧑‍💻 | AI tools | [AI Tool Radar](https://lang-jiaqi.github.io/omnisource-site/tools.html) | [ai-tools.yaml](tracks/builder/ai-tools.yaml) |
 
 All three types work the same way: copy a track, replace its keywords, sources, and filtering rules with your own, then view the results in GitHub Issues. Their directories are `research/`, `venture/`, and `builder/`; each YAML file in the research directory represents a specific research domain.
 

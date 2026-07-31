@@ -10,16 +10,14 @@ CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 
 
 class ReadmeLanguageLinksTests(unittest.TestCase):
-    def test_default_english_readme_points_to_english_site(self) -> None:
+    def test_default_english_readme_points_to_current_official_site(self) -> None:
         text = (ROOT / "README.md").read_text(encoding="utf-8")
 
-        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/", text)
-        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/report.html", text)
-        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/entrepreneur.html", text)
-        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/tools.html", text)
-        self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/report.html", text)
-        self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html", text)
-        self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/tools.html", text)
+        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/", text)
+        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/report.html", text)
+        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/entrepreneur.html", text)
+        self.assertIn("https://lang-jiaqi.github.io/omnisource-site/tools.html", text)
+        self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/en/", text)
 
     def test_readmes_link_to_each_other(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
