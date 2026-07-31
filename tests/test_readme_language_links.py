@@ -11,7 +11,7 @@ CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 
 class ReadmeLanguageLinksTests(unittest.TestCase):
     def test_english_readme_points_to_english_demo_and_samples(self) -> None:
-        text = (ROOT / "README.en.md").read_text(encoding="utf-8")
+        text = (ROOT / "README.md").read_text(encoding="utf-8")
 
         self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/", text)
         self.assertIn("https://lang-jiaqi.github.io/omnisource-site/en/report.html", text)
@@ -21,6 +21,13 @@ class ReadmeLanguageLinksTests(unittest.TestCase):
         self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/report.html", text)
         self.assertNotIn("https://lang-jiaqi.github.io/omnisource-site/tools.html", text)
         self.assertNotIn("examples/reports/llm-agents.md)", text)
+
+    def test_readmes_link_to_each_other(self) -> None:
+        english = (ROOT / "README.md").read_text(encoding="utf-8")
+        chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+
+        self.assertIn("[中文](README.zh-CN.md)", english)
+        self.assertIn('href="README.md">English</a>', chinese)
 
     def test_english_sample_reports_do_not_contain_chinese_body_text(self) -> None:
         for path in sorted((ROOT / "examples" / "reports" / "en").glob("*.md")):
